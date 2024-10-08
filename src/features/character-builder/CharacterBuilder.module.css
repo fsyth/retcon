@@ -1,0 +1,70 @@
+.characterBuilder {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+  text-align: center;
+}
+
+.abilityScores {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.abilityScore {
+  border: 1px solid #ddd;
+  border-radius: 8rem / 4rem;
+  max-width: 5rem;
+  cursor: pointer;
+}
+
+.abilityScore .modifier {
+  font-size: 2rem;
+  margin: 0 auto;
+}
+
+.abilityScore .score {
+  font-size: 1rem;
+  margin: 0 auto;
+  width: 3rem;
+  border: 1px solid #ddd;
+  border-radius: 2rem / 1rem;
+}
+
+.abilityScore .ability {
+  font-size: 0.8rem;
+  margin: 0 auto;
+  text-transform: uppercase;
+}
+
+.featureCard {
+  border: 1px solid #ddd;
+  border-radius: var(--bs-border-radius);
+  margin: 0.2rem;
+  padding: 0.5rem;
+}
+
+.featureCard Button {
+  float: right;
+  margin-top: -0.5rem;
+  margin-right: -0.5rem;
+  /* width: 2.5rem; */
+  height: 2.5rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pointBudget {
+  position: sticky;
+  top: 1rem;
+  float: right;
+  width: 12rem;
+  z-index: 1100;
+  margin-top: 2.25rem;
+}
