@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, ModalDialog } from '@mui/joy'
 
 import AbilityScore from './AbilityScore'
+import PointBudget from './PointBudget'
 import CardInventory from './CardInventory'
 import CardShop from './CardShop'
 
+import type { Slot } from './cards'
 import { useAppSelector } from '../../app/hooks'
-import { Slot } from './cards'
 import { selectCharacter } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
@@ -35,14 +36,17 @@ export default function CharacterStats() {
         <AbilityScore ability='wis' score={wis} onClick={() => showCardsForSlot('wis-score')} />
         <AbilityScore ability='cha' score={cha} onClick={() => showCardsForSlot('cha-score')} />
       </div>
-      <Modal show={slotToShow !== null} onHide={() => setSlotToShow(null)}>
-        <CardInventory
-          filter={card => card.slot === slotToShow}
-        />
-        <CardShop
-          filter={card => card.slot === slotToShow}
-          showConflictTooltips={false}
-        />
+      <Modal open={slotToShow !== null} onClose={() => setSlotToShow(null)}>
+        <ModalDialog>
+          <PointBudget />
+          <CardInventory
+            filter={card => card.slot === slotToShow}
+          />
+          <CardShop
+            filter={card => card.slot === slotToShow}
+            showConflictTooltips={false}
+          />
+        </ModalDialog>
       </Modal>
     </div>
   )

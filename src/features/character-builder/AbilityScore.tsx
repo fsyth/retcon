@@ -1,12 +1,13 @@
 import React from 'react'
+import { Tooltip } from '@mui/joy'
+
+import Card from './Card'
 
 import type { Ability } from './character'
-
-import style from './CharacterBuilder.module.css'
 import { useAppSelector } from '../../app/hooks'
 import { selectSelectedCards } from './characterBuilderSlice'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import Card from './Card'
+
+import style from './CharacterBuilder.module.css'
 
 interface AbilityScoreProps {
   ability: Ability
@@ -24,22 +25,17 @@ export default function AbilityScore({ ability, score, onClick }: AbilityScorePr
     new Intl.NumberFormat('en-US', {signDisplay: 'always'}).format(modifier)
 
   return (
-    <OverlayTrigger
-      show={cardForSlot === undefined ? false : undefined}
-      placement='bottom'
-      overlay={props =>
-        <Tooltip {...props}>
-          {cardForSlot !== undefined &&
-            <Card id={cardForSlot.id}/>
-          }
-        </Tooltip>
-      }
+    <Tooltip
+      title={cardForSlot !== undefined && <Card id={cardForSlot.id} />}
+      placement="bottom"
+      arrow={true}
+      disableHoverListener={cardForSlot === undefined}
     >
       <div className={style.abilityScore} onClick={onClick}>
         <p className={style.ability}>{ability}</p>
         <p className={style.modifier}>{formattedModifier}</p>
         <p className={style.score}>{score}</p>
       </div>
-    </OverlayTrigger>
+    </Tooltip>
   )
 }

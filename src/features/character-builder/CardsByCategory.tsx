@@ -1,7 +1,7 @@
 import React from 'react'
-import { Accordion } from 'react-bootstrap'
+import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@mui/joy'
 
-import { CardState } from './cards'
+import type { CardState } from './cards'
 
 import Card from './Card'
 
@@ -22,17 +22,17 @@ export default function CardsByCategory({ cards, canBuy, canSell }: CardsByCateg
       categories.push(card.category)
 
   return (
-    <Accordion flush>
+    <AccordionGroup>
       {categories.map(category =>
-        <Accordion.Item key={category} eventKey={category}>
-          <Accordion.Header>{category}</Accordion.Header>
-          <Accordion.Body className={style.cardGrid}>
+        <Accordion key={category} defaultExpanded={true}>
+          <AccordionSummary>{category}</AccordionSummary>
+          <AccordionDetails className={style.cardGrid}>
             {cards.filter(card => card.category === category).map(card =>
               <Card key={card.id} id={card.id} canBuy={canBuy} canSell={canSell} />
             )}
-          </Accordion.Body>
-        </Accordion.Item>
+          </AccordionDetails>
+        </Accordion>
       )}
-    </Accordion>
+    </AccordionGroup>
   )
 }

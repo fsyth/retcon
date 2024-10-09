@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Button, Tooltip } from '@mui/joy'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectCardById, buyCard, sellCard } from './characterBuilderSlice'
@@ -30,27 +30,28 @@ export default function Card({ id, canBuy, canSell, conflict, showConflictToolti
         <strong>{pointCost} RP</strong>
         {canBuy && !conflict &&
           <Button
-            variant="success"
+            color="success"
+            variant="outlined"
             onClick={() => dispatch(buyCard(id))}
             disabled={copiesAvailable <= 0}>Buy</Button>}
         {canBuy && conflict &&
-          <OverlayTrigger
-           show={showConflictTooltip}
-            overlay={props =>
-              <Tooltip {...props}>
-                <Card id={conflict}/>
-              </Tooltip>
-            }
+          <Tooltip 
+            title={<Card id={conflict}/>}
+            placement="top"
+            arrow={true}
+            disableHoverListener={showConflictTooltip === false}
           >
             <Button
-              variant="warning"
+              color="warning"
+            variant="outlined"
               onClick={() => dispatch(buyCard(id))}
               disabled={copiesAvailable <= 0}>Replace</Button>    
-          </OverlayTrigger>
+          </Tooltip>
         }
         {canSell &&
           <Button
-            variant="danger"
+            color="danger"
+            variant="outlined"
             onClick={() => dispatch(sellCard(id))}>Sell</Button>
         }
       </p>

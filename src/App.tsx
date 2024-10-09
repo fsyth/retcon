@@ -1,17 +1,16 @@
 import React from 'react'
-import { Container } from 'react-bootstrap';
+import { Sheet } from '@mui/joy'
 
 import CharacterBuilder from './features/character-builder/CharacterBuilder'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 export default function App() {
   return (
     <div className="App">
-      <Container fluid="m">
+      <Sheet>
         <CharacterBuilder />
-      </Container>
+      </Sheet>
     </div>
   )
 }

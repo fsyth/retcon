@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, InputGroup } from 'react-bootstrap'
+import { Input } from '@mui/joy'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectPointBudget, selectPointsSpent, setPointBudget } from './characterBuilderSlice'
@@ -13,32 +13,37 @@ export default function PointBudget() {
   
   const [inputState, setInputState] = useState(pointBudget.toString())
 
-  const validityClass = pointsSpent <= pointBudget ? 'is-valid' : 'is-invalid'
-
   return (
     <div className={style.pointBudget}>
-      <InputGroup>
-        <InputGroup.Text>{pointsSpent} RP /</InputGroup.Text>
-        <Form.Control
-          className={validityClass}
-          type="number"
-          value={inputState}
-          min={0}
-          step={1}
-          onChange={e => {
-            setInputState(e.target.value)
-            const float = parseFloat(e.target.value)
-            if (!isNaN(float))
-              dispatch(setPointBudget(float))
-          }}
-          onBlur={() => {
-            if (inputState === '') {
-              setInputState('0')
-              dispatch(setPointBudget(0))
-            }
-          }}
-        />
-      </InputGroup>
+      <Input
+        type="number"
+        startDecorator={`${pointsSpent} /`}
+        endDecorator="RP"
+        color={pointsSpent <= pointBudget ? 'success' : 'danger'}
+        slotProps={{
+          input: {
+            value: inputState,
+            min: 0,
+            max: 999,
+            step: 1,
+          }
+        }}
+        onChange={e => {
+          setInputState(e.target.value)
+          const float = parseFloat(e.target.value)
+          if (!isNaN(float))
+            dispatch(setPointBudget(float))
+        }}
+        onBlur={() => {
+          if (inputState === '') {
+            setInputState('0')
+            dispatch(setPointBudget(0))
+          }
+        }}
+        sx={{
+          '--Input-decoratorColor': 'inherit'
+        }}
+      />
     </div>
   )
 }

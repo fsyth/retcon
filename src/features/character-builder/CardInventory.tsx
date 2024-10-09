@@ -1,11 +1,11 @@
 import React from 'react'
-import { Accordion } from 'react-bootstrap'
-
-import { useAppSelector } from '../../app/hooks'
-import { CardState } from './cards'
-import { selectSelectedCards } from './characterBuilderSlice'
+import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@mui/joy'
 
 import Card from './Card'
+
+import type { CardState } from './cards'
+import { useAppSelector } from '../../app/hooks'
+import { selectSelectedCards } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -18,15 +18,17 @@ export default function CardInventory({ filter }: CardInventoryProps) {
   const cards = filter ? allCards.filter(filter) : allCards
 
   return (
-    <Accordion defaultActiveKey="0" flush>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Selected Cards</Accordion.Header>
-        <Accordion.Body className={style.cardGrid}>
-          {cards.map(card =>
-            <Card key={card.id} id={card.id} canSell={true} />
-          )}
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
+    <AccordionGroup>
+      <Accordion defaultExpanded={true}>
+        <AccordionSummary>Selected Cards</AccordionSummary>
+        <AccordionDetails>
+          <div className={style.cardGrid}>
+            {cards.map(card =>
+              <Card key={card.id} id={card.id} canSell={true} />
+            )}
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </AccordionGroup>
   )
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-import { Accordion } from 'react-bootstrap'
+import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@mui/joy'
 
 import Card from './Card'
 
-import { CardState } from './cards'
+import type { CardState } from './cards'
 import { useAppSelector } from '../../app/hooks'
 import { selectAllCards, selectSelectedCards } from './characterBuilderSlice'
 
@@ -41,10 +41,10 @@ export default function CardShop(
   //todo add filter buttons or a search bar as a component that wraps this
 
   return (
-    <Accordion defaultActiveKey="0" flush>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Card Shop</Accordion.Header>
-        <Accordion.Body>
+    <AccordionGroup>
+      <Accordion defaultExpanded={true}>
+        <AccordionSummary>Card Shop</AccordionSummary>
+        <AccordionDetails>
           <div className={style.cardGrid}>
             {cardsWithConflicts.map(([card, conflict]) =>
                 <Card
@@ -56,12 +56,12 @@ export default function CardShop(
                 />
             )}
           </div>
-        </Accordion.Body>
-      </Accordion.Item>
+        </AccordionDetails>
+      </Accordion>
       {showSoldOut &&
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Sold Out</Accordion.Header>
-          <Accordion.Body>
+        <Accordion>
+          <AccordionSummary>Sold Out</AccordionSummary>
+          <AccordionDetails>
             <div className={style.cardGrid}>
               {filteredCards.filter(card => card.copiesAvailable <= 0).map(card =>
                 <Card
@@ -70,9 +70,9 @@ export default function CardShop(
                   canBuy={true} />
               )}
             </div>
-          </Accordion.Body>
-        </Accordion.Item>
+          </AccordionDetails>
+        </Accordion>
       }
-    </Accordion>
+    </AccordionGroup>
   )
 }

@@ -42,17 +42,23 @@
 
 .featureCard {
   border: 1px solid #ddd;
-  border-radius: var(--bs-border-radius);
+  border-radius: 6px;
   margin: 0.2rem;
   padding: 0.5rem;
+  text-align: left;
 }
 
 .featureCard Button {
   float: right;
-  margin-top: -0.5rem;
-  margin-right: -0.5rem;
+  margin-top: calc(-0.5rem - 1px);
+  margin-right: calc(-0.5rem - 1px);
   /* width: 2.5rem; */
   height: 2.5rem;
+  border-radius: 6px;
+}
+
+.featureCard p {
+  margin-top: 0;
 }
 
 .cardGrid {
@@ -64,7 +70,7 @@
   position: sticky;
   top: 1rem;
   float: right;
-  width: 12rem;
+  width: 8.5rem;
   z-index: 1100;
-  margin-top: 2.25rem;
+  margin: 1.75rem 0.5rem 0.5rem 0.5rem;
 }
