@@ -39,7 +39,7 @@ export default function Card({ id, canBuy, canSell, conflict, showConflictToolti
             title={<Card id={conflict}/>}
             placement="top"
             arrow={true}
-            disableHoverListener={showConflictTooltip === false}
+            disableHoverListener={showConflictTooltip !== true}
           >
             <Button
               color="warning"

@@ -6,15 +6,23 @@ import { selectPointBudget, selectPointsSpent, setPointBudget } from './characte
 
 import style from './CharacterBuilder.module.css'
 
-export default function PointBudget() {
+interface PointBudgetProps {
+  sticky?: boolean
+}
+
+export default function PointBudget({sticky}: PointBudgetProps) {
   const dispatch = useAppDispatch()
   const pointBudget = useAppSelector(selectPointBudget)
   const pointsSpent = useAppSelector(selectPointsSpent)
   
   const [inputState, setInputState] = useState(pointBudget.toString())
 
+  let className = style.pointBudget
+  if (sticky)
+    className += ` ${style.sticky}`
+
   return (
-    <div className={style.pointBudget}>
+    <div className={className}>
       <Input
         type="number"
         startDecorator={`${pointsSpent} /`}

@@ -16,11 +16,48 @@ export interface CardEffect {
   int?: number
   wis?: number
   cha?: number
+  strSave?: number
+  dexSave?: number
+  conSave?: number
+  intSave?: number
+  wisSave?: number
+  chaSave?: number
+  acrobatics?: number
+  animalHandling?: number
+  arcana?: number
+  athletics?: number
+  deception?: number
+  history?: number
+  insight?: number
+  intimidation?: number
+  investigation?: number
+  medicine?: number
+  nature?: number
+  perception?: number
+  performance?: number
+  persuasion?: number
+  religion?: number
+  sleightOfHand?: number
+  stealth?: number
+  survival?: number
 }
 
-export type Category = 'ability-score'
+export type Category =
+  'ability-score' | 'saving-throw' | 'skill' | 'expertise'
 
-export type Slot = 'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score'
+export type Slot =
+  'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
+  'str-save' | 'dex-save' | 'con-save' | 'int-save' | 'wis-save' | 'cha-save' |
+  'acrobatics-bonus' | 'animal-handling-bonus' | 'arcana-bonus' | 'athletics-bonus' |
+  'deception-bonus' | 'history-bonus' | 'insight-bonus' | 'intimidation-bonus' |
+  'investigation-bonus' | 'medicine-bonus' | 'nature-bonus' | 'perception-bonus' |
+  'performance-bonus' | 'persuasion-bonus' | 'religion-bonus' | 'sleight-of-hand-bonus' |
+  'stealth-bonus' | 'survival-bonus'
+
+export const proficiencyBonus = 4
+export const prof = `+${proficiencyBonus}`
+export const expertiseBonus = 2 * proficiencyBonus
+export const expertise = `+${expertiseBonus}`
 
 export const allCards: CardState[] = [
   // Strength ability score
@@ -568,5 +605,428 @@ export const allCards: CardState[] = [
     copiesAvailable: 1,
     category: 'ability-score',
     slot: 'cha-score'
+  },
+  // Saving throws
+  {
+    id: 'str-save',
+    pointCost: 1,
+    flavor: "Sturdy.",
+    description: `Strength save proficiency (${prof})`,
+    effect: { strSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'str-save'
+  },
+  {
+    id: 'dex-save',
+    pointCost: 2,
+    flavor: "Dodged.",
+    description: `Dexterity save proficiency (${prof})`,
+    effect: { dexSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'dex-save'
+  },
+  {
+    id: 'con-save',
+    pointCost: 2,
+    flavor: "I've got this.",
+    description: `Constitution save proficiency (${prof})`,
+    effect: { conSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'con-save'
+  },
+  {
+    id: 'int-save',
+    pointCost: 1,
+    flavor: "Get out of my head.",
+    description: `Intelligence save proficiency (${prof})`,
+    effect: { intSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'int-save'
+  },
+  {
+    id: 'wis-save',
+    pointCost: 2,
+    flavor: "I saw that coming.",
+    description: `Wisdom save proficiency (${prof})`,
+    effect: { wisSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'wis-save'
+  },
+  {
+    id: 'cha-save',
+    pointCost: 1,
+    flavor: "Can't charm me.",
+    description: `Charisma save proficiency (${prof})`,
+    effect: { chaSave: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'saving-throw',
+    slot: 'cha-save'
+  },
+  // Skills
+  {
+    id: 'acrobatics-prof',
+    pointCost: 1,
+    flavor: "I did a summer at the circus.",
+    description: `Acrobatics proficiency (${prof})`,
+    effect: { acrobatics: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'acrobatics-bonus'
+  },
+  {
+    id: 'animal-handling-prof',
+    pointCost: 1,
+    flavor: "I'm good with animals.",
+    description: `Animal handling proficiency (${prof})`,
+    effect: { animalHandling: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'animal-handling-bonus'
+  },
+  {
+    id: 'arcana-prof',
+    pointCost: 1,
+    flavor: "I'm learned in the magical arts.",
+    description: `Arcana proficiency (${prof})`,
+    effect: { arcana: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'arcana-bonus'
+  },
+  {
+    id: 'athletics-prof',
+    pointCost: 1,
+    flavor: "I'm into fitness.",
+    description: `Athletics proficiency (${prof})`,
+    effect: { athletics: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'athletics-bonus'
+  },
+  {
+    id: 'deception-prof',
+    pointCost: 1,
+    flavor: "I would never lie to you.",
+    description: `Deception proficiency (${prof})`,
+    effect: { deception: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'deception-bonus'
+  },
+  {
+    id: 'history-prof',
+    pointCost: 1,
+    flavor: "I love a dusty book.",
+    description: `History proficiency (${prof})`,
+    effect: { history: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'history-bonus'
+  },
+  {
+    id: 'insight-prof',
+    pointCost: 1,
+    flavor: "I'm good at reading people.",
+    description: `Insight proficiency (${prof})`,
+    effect: { insight: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'insight-bonus'
+  },
+  {
+    id: 'intimidation-prof',
+    pointCost: 1,
+    flavor: "People listen to me.",
+    description: `Intimidation proficiency (${prof})`,
+    effect: { intimidation: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'intimidation-bonus'
+  },
+  {
+    id: 'investigation-prof',
+    pointCost: 1,
+    flavor: "I'm detail oriented.",
+    description: `Investigation proficiency (${prof})`,
+    effect: { investigation: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'investigation-bonus'
+  },
+  {
+    id: 'medicine-prof',
+    pointCost: 1,
+    flavor: "Patch 'em up.",
+    description: `Medicine proficiency (${prof})`,
+    effect: { medicine: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'medicine-bonus'
+  },
+  {
+    id: 'nature-prof',
+    pointCost: 1,
+    flavor: "I know my plants and animals.",
+    description: `Nature proficiency (${prof})`,
+    effect: { nature: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'nature-bonus'
+  },
+  {
+    id: 'perception-prof',
+    pointCost: 1,
+    flavor: "I have a keen eye.",
+    description: `Perception proficiency (${prof})`,
+    effect: { perception: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'perception-bonus'
+  },
+  {
+    id: 'performance-prof',
+    pointCost: 1,
+    flavor: "It's all in the delivery.",
+    description: `Performance proficiency (${prof})`,
+    effect: { performance: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'performance-bonus'
+  },
+  {
+    id: 'persuasion-prof',
+    pointCost: 1,
+    flavor: "I can usually talk people around.",
+    description: `Persuasion proficiency (${prof})`,
+    effect: { persuasion: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'persuasion-bonus'
+  },
+  {
+    id: 'religion-prof',
+    pointCost: 1,
+    flavor: "I know my devils from my demons.",
+    description: `Religion proficiency (${prof})`,
+    effect: { religion: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'religion-bonus'
+  },
+  {
+    id: 'sleight-of-hand-prof',
+    pointCost: 1,
+    flavor: "Look! What's that behind you!",
+    description: `Sleight of hand proficiency (${prof})`,
+    effect: { sleightOfHand: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'sleight-of-hand-bonus'
+  },
+  {
+    id: 'stealth-prof',
+    pointCost: 1,
+    flavor: "I'm whisper quiet.",
+    description: `Stealth proficiency (${prof})`,
+    effect: { stealth: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'stealth-bonus'
+  },
+  {
+    id: 'survival-prof',
+    pointCost: 1,
+    flavor: "I know this one's safe to eat.",
+    description: `Survival proficiency (${prof})`,
+    effect: { survival: proficiencyBonus },
+    copiesAvailable: 1,
+    category: 'skill',
+    slot: 'survival-bonus'
+  },
+  // Expertise
+  {
+    id: 'acrobatics-expert',
+    pointCost: 3,
+    flavor: "I invented the frontflip.",
+    description: `Acrobatics expertise (${expertise})`,
+    effect: { acrobatics: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'acrobatics-bonus'
+  },
+  {
+    id: 'animal-handling-expert',
+    pointCost: 3,
+    flavor: "Animals just love me.",
+    description: `Animal handling expertise (${expertise})`,
+    effect: { animalHandling: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'animal-handling-bonus'
+  },
+  {
+    id: 'arcana-expert',
+    pointCost: 3,
+    flavor: "I'm a master of the arcane.",
+    description: `Arcana expertise (${expertise})`,
+    effect: { arcana: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'arcana-bonus'
+  },
+  {
+    id: 'athletics-expert',
+    pointCost: 3,
+    flavor: "I did a 10k before breakfast.",
+    description: `Athletics expertise (${expertise})`,
+    effect: { athletics: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'athletics-bonus'
+  },
+  {
+    id: 'deception-expert',
+    pointCost: 3,
+    flavor: "I'm lying right now.",
+    description: `Deception expertise (${expertise})`,
+    effect: { deception: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'deception-bonus'
+  },
+  {
+    id: 'history-expert',
+    pointCost: 3,
+    flavor: "I've read all the books.",
+    description: `History expertise (${expertise})`,
+    effect: { history: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'history-bonus'
+  },
+  {
+    id: 'insight-expert',
+    pointCost: 3,
+    flavor: "But how does that make you feel?",
+    description: `Insight expertise (${expertise})`,
+    effect: { insight: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'insight-bonus'
+  },
+  {
+    id: 'intimidation-expert',
+    pointCost: 3,
+    flavor: "I dare you.",
+    description: `Intimidation expertise (${expertise})`,
+    effect: { intimidation: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'intimidation-bonus'
+  },
+  {
+    id: 'investigation-expert',
+    pointCost: 3,
+    flavor: "Elementary, my dear.",
+    description: `Investigation expertise (${expertise})`,
+    effect: { investigation: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'investigation-bonus'
+  },
+  {
+    id: 'medicine-expert',
+    pointCost: 3,
+    flavor: "It's hardly rocket science.",
+    description: `Medicine expertise (${expertise})`,
+    effect: { medicine: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'medicine-bonus'
+  },
+  {
+    id: 'nature-expert',
+    pointCost: 3,
+    flavor: "Nature is one with me.",
+    description: `Nature expertise (${expertise})`,
+    effect: { nature: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'nature-bonus'
+  },
+  {
+    id: 'perception-expert',
+    pointCost: 3,
+    flavor: "I spy with my beady eye.",
+    description: `Perception expertise (${expertise})`,
+    effect: { perception: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'perception-bonus'
+  },
+  {
+    id: 'performance-expert',
+    pointCost: 3,
+    flavor: "But you have heard of me.",
+    description: `Performance expertise (${expertise})`,
+    effect: { performance: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'performance-bonus'
+  },
+  {
+    id: 'persuasion-expert',
+    pointCost: 3,
+    flavor: "Don't you agree?",
+    description: `Persuasion expertise (${expertise})`,
+    effect: { persuasion: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'persuasion-bonus'
+  },
+  {
+    id: 'religion-expert',
+    pointCost: 3,
+    flavor: "I know the god personally.",
+    description: `Religion expertise (${expertise})`,
+    effect: { religion: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'religion-bonus'
+  },
+  {
+    id: 'sleight-of-hand-expert',
+    pointCost: 3,
+    flavor: "None of this stuff's mine.",
+    description: `Sleight of hand expertise (${expertise})`,
+    effect: { sleightOfHand: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'sleight-of-hand-bonus'
+  },
+  {
+    id: 'stealth-expert',
+    pointCost: 3,
+    flavor: "I'm basically invisible.",
+    description: `Stealth expertise (${expertise})`,
+    effect: { stealth: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'stealth-bonus'
+  },
+  {
+    id: 'survival-expert',
+    pointCost: 3,
+    flavor: "I know which way north is.",
+    description: `Survival expertise (${expertise})`,
+    effect: { survival: expertiseBonus },
+    copiesAvailable: 1,
+    category: 'expertise',
+    slot: 'survival-bonus'
   },
 ]

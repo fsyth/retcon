@@ -2,22 +2,17 @@ import React, { useState } from 'react'
 import { Modal, ModalDialog } from '@mui/joy'
 
 import AbilityScore from './AbilityScore'
+import SkillBonus from './SkillBonus'
 import PointBudget from './PointBudget'
 import CardInventory from './CardInventory'
 import CardShop from './CardShop'
 
 import type { Slot } from './cards'
-import { useAppSelector } from '../../app/hooks'
-import { selectCharacter } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
 export default function CharacterStats() {
   const [slotToShow, setSlotToShow] = useState<Slot | null>(null)
-  
-  const character = useAppSelector(selectCharacter)
-
-  const { str, dex, con, int, wis, cha } = character
 
   const showCardsForSlot = (mutuallyExclusive: Slot) => {
     if (slotToShow !== null)
@@ -28,24 +23,171 @@ export default function CharacterStats() {
 
   return (
     <div>
-      <div className={style.abilityScores}>
-        <AbilityScore ability='str' score={str} onClick={() => showCardsForSlot('str-score')} />
-        <AbilityScore ability='dex' score={dex} onClick={() => showCardsForSlot('dex-score')} />
-        <AbilityScore ability='con' score={con} onClick={() => showCardsForSlot('con-score')} />
-        <AbilityScore ability='int' score={int} onClick={() => showCardsForSlot('int-score')} />
-        <AbilityScore ability='wis' score={wis} onClick={() => showCardsForSlot('wis-score')} />
-        <AbilityScore ability='cha' score={cha} onClick={() => showCardsForSlot('cha-score')} />
+      <div className={style.abilityGrid}>
+        <div>
+          <AbilityScore
+            ability='str'
+            slot='str-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='str'
+            skill='strSave'
+            slot='str-save'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='str'
+            skill='athletics'
+            slot='athletics-bonus'
+            onClick={showCardsForSlot} />
+        </div>
+        <div>
+          <AbilityScore
+            ability='dex'
+            slot='dex-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='dex'
+            skill='dexSave'
+            slot='dex-save'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='dex'
+            skill='acrobatics'
+            slot='acrobatics-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='dex'
+            skill='sleightOfHand'
+            slot='sleight-of-hand-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='dex'
+            skill='stealth'
+            slot='stealth-bonus'
+            onClick={showCardsForSlot} />
+        </div>
+        <div>
+          <AbilityScore
+            ability='con'
+            slot='con-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='con'
+            skill='conSave'
+            slot='con-save'
+            onClick={showCardsForSlot} />
+        </div>
+        <div>
+          <AbilityScore
+            ability='int'
+            slot='int-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='intSave'
+            slot='int-save'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='arcana'
+            slot='arcana-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='history'
+            slot='history-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='investigation'
+            slot='investigation-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='nature'
+            slot='nature-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='int'
+            skill='religion'
+            slot='religion-bonus'
+            onClick={showCardsForSlot} />
+        </div>
+        <div>
+          <AbilityScore
+            ability='wis'
+            slot='wis-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='wisSave'
+            slot='wis-save'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='animalHandling'
+            slot='animal-handling-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='insight'
+            slot='insight-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='medicine'
+            slot='medicine-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='perception'
+            slot='perception-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='wis'
+            skill='survival'
+            slot='survival-bonus'
+            onClick={showCardsForSlot} />
+        </div>
+        <div>
+          <AbilityScore
+            ability='cha'
+            slot='cha-score'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='cha'
+            skill='chaSave'
+            slot='cha-save' 
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='cha'
+            skill='deception'
+            slot='deception-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='cha'
+            skill='intimidation'
+            slot='intimidation-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='cha'
+            skill='performance'
+            slot='performance-bonus'
+            onClick={showCardsForSlot} />
+          <SkillBonus
+            ability='cha'
+            skill='persuasion'
+            slot='persuasion-bonus'
+            onClick={showCardsForSlot} />
+        </div>
       </div>
       <Modal open={slotToShow !== null} onClose={() => setSlotToShow(null)}>
         <ModalDialog>
-          <PointBudget />
-          <CardInventory
-            filter={card => card.slot === slotToShow}
-          />
-          <CardShop
-            filter={card => card.slot === slotToShow}
-            showConflictTooltips={false}
-          />
+          <div className={style.scrollable}>
+            <PointBudget />
+            <CardInventory filter={card => card.slot === slotToShow} />
+            <CardShop filter={card => card.slot === slotToShow} />
+          </div>
         </ModalDialog>
       </Modal>
     </div>

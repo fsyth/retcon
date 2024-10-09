@@ -22,11 +22,14 @@ export default function CardInventory({ filter }: CardInventoryProps) {
       <Accordion defaultExpanded={true}>
         <AccordionSummary>Selected Cards</AccordionSummary>
         <AccordionDetails>
-          <div className={style.cardGrid}>
-            {cards.map(card =>
-              <Card key={card.id} id={card.id} canSell={true} />
-            )}
-          </div>
+          {cards.length === 0
+            ? <p>No cards selected.</p>
+            : <div className={style.cardGrid}>
+                {cards.map(card =>
+                  <Card key={card.id} id={card.id} canSell />
+                )}
+              </div>
+          }
         </AccordionDetails>
       </Accordion>
     </AccordionGroup>

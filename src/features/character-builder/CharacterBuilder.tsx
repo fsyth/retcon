@@ -11,10 +11,10 @@ export default function CharacterBuilder() {
   return (
     <div className={styles.characterBuilder}>
       <h1>Retcon Character Builder</h1>
-      <PointBudget />
+      <PointBudget sticky/>
       <CharacterStats />
       <CardInventory />
-      <CardShop />
+      <CardShop userFilters showConflictTooltips/>
     </div>
   )
 }
