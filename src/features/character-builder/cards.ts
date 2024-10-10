@@ -7,6 +7,8 @@ export interface CardState {
   copiesAvailable: number,
   category: Category,
   slot?: Slot
+  requires?: CardEffect
+  addRequirements?: string[] // id
 }
 
 export interface CardEffect {
@@ -16,12 +18,14 @@ export interface CardEffect {
   int?: number
   wis?: number
   cha?: number
+
   strSave?: number
   dexSave?: number
   conSave?: number
   intSave?: number
   wisSave?: number
   chaSave?: number
+
   acrobatics?: number
   animalHandling?: number
   arcana?: number
@@ -40,10 +44,34 @@ export interface CardEffect {
   sleightOfHand?: number
   stealth?: number
   survival?: number
+
+  weaponsProf?: WeaponsProf
+  firearmsProf?: boolean
+
+  armorProf?: ArmorProf
+  shieldProf?: boolean
+
+  baseArmorClass?: number
+  armorMaxDexBonus?: number
+  armorAddCon?: boolean
+  armorAddWis?: boolean
+}
+
+export enum ArmorProf {
+  None = 0,
+  Light,
+  Medium,
+  Heavy
+}
+
+export enum WeaponsProf {
+  None = 0,
+  Simple,
+  Martial
 }
 
 export type Category =
-  'ability-score' | 'saving-throw' | 'skill' | 'expertise'
+  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'weapons' | 'armor' | 'equipped-armor'
 
 export type Slot =
   'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
@@ -52,7 +80,8 @@ export type Slot =
   'deception-bonus' | 'history-bonus' | 'insight-bonus' | 'intimidation-bonus' |
   'investigation-bonus' | 'medicine-bonus' | 'nature-bonus' | 'perception-bonus' |
   'performance-bonus' | 'persuasion-bonus' | 'religion-bonus' | 'sleight-of-hand-bonus' |
-  'stealth-bonus' | 'survival-bonus'
+  'stealth-bonus' | 'survival-bonus' |
+  'weapons-prof' | 'armor-prof' | 'shield-prof' | 'base-armor' | 'equipped-shield'
 
 export const proficiencyBonus = 4
 export const prof = `+${proficiencyBonus}`
@@ -69,7 +98,7 @@ export const allCards: CardState[] = [
     effect: {str: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-18',
@@ -79,7 +108,7 @@ export const allCards: CardState[] = [
     effect: {str: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-16',
@@ -89,7 +118,7 @@ export const allCards: CardState[] = [
     effect: {str: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-14',
@@ -99,7 +128,7 @@ export const allCards: CardState[] = [
     effect: {str: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-12',
@@ -109,7 +138,7 @@ export const allCards: CardState[] = [
     effect: {str: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-8',
@@ -119,7 +148,7 @@ export const allCards: CardState[] = [
     effect: {str: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-6',
@@ -129,7 +158,7 @@ export const allCards: CardState[] = [
     effect: {str: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-4',
@@ -139,7 +168,7 @@ export const allCards: CardState[] = [
     effect: {str: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   {
     id: 'str-3',
@@ -149,7 +178,7 @@ export const allCards: CardState[] = [
     effect: {str: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'str-score'
+    slot: 'str-score',
   },
   // Dexterity ability score
   {
@@ -160,7 +189,7 @@ export const allCards: CardState[] = [
     effect: {dex: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-18',
@@ -170,7 +199,7 @@ export const allCards: CardState[] = [
     effect: {dex: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-16',
@@ -180,7 +209,7 @@ export const allCards: CardState[] = [
     effect: {dex: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-14',
@@ -190,7 +219,7 @@ export const allCards: CardState[] = [
     effect: {dex: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-12',
@@ -200,7 +229,7 @@ export const allCards: CardState[] = [
     effect: {dex: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-8',
@@ -210,7 +239,7 @@ export const allCards: CardState[] = [
     effect: {dex: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-6',
@@ -220,7 +249,7 @@ export const allCards: CardState[] = [
     effect: {dex: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-4',
@@ -230,7 +259,7 @@ export const allCards: CardState[] = [
     effect: {dex: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   {
     id: 'dex-3',
@@ -240,7 +269,7 @@ export const allCards: CardState[] = [
     effect: {dex: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'dex-score'
+    slot: 'dex-score',
   },
   // Constitution ability score
   {
@@ -251,7 +280,7 @@ export const allCards: CardState[] = [
     effect: {con: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-18',
@@ -261,7 +290,7 @@ export const allCards: CardState[] = [
     effect: {con: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-16',
@@ -271,7 +300,7 @@ export const allCards: CardState[] = [
     effect: {con: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-14',
@@ -281,7 +310,7 @@ export const allCards: CardState[] = [
     effect: {con: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-12',
@@ -291,7 +320,7 @@ export const allCards: CardState[] = [
     effect: {con: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-8',
@@ -301,7 +330,7 @@ export const allCards: CardState[] = [
     effect: {con: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-6',
@@ -311,7 +340,7 @@ export const allCards: CardState[] = [
     effect: {con: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-4',
@@ -321,7 +350,7 @@ export const allCards: CardState[] = [
     effect: {con: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   {
     id: 'con-3',
@@ -331,7 +360,7 @@ export const allCards: CardState[] = [
     effect: {con: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'con-score'
+    slot: 'con-score',
   },
   // Intelligence ability score
   {
@@ -342,7 +371,7 @@ export const allCards: CardState[] = [
     effect: {int: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-18',
@@ -352,7 +381,7 @@ export const allCards: CardState[] = [
     effect: {int: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-16',
@@ -362,7 +391,7 @@ export const allCards: CardState[] = [
     effect: {int: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-14',
@@ -372,7 +401,7 @@ export const allCards: CardState[] = [
     effect: {int: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-12',
@@ -382,7 +411,7 @@ export const allCards: CardState[] = [
     effect: {int: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-8',
@@ -392,7 +421,7 @@ export const allCards: CardState[] = [
     effect: {int: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-6',
@@ -402,7 +431,7 @@ export const allCards: CardState[] = [
     effect: {int: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-4',
@@ -412,7 +441,7 @@ export const allCards: CardState[] = [
     effect: {int: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   {
     id: 'int-3',
@@ -422,7 +451,7 @@ export const allCards: CardState[] = [
     effect: {int: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'int-score'
+    slot: 'int-score',
   },
   // Wisdom ability score
   {
@@ -433,7 +462,7 @@ export const allCards: CardState[] = [
     effect: {wis: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-18',
@@ -443,7 +472,7 @@ export const allCards: CardState[] = [
     effect: {wis: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-16',
@@ -453,7 +482,7 @@ export const allCards: CardState[] = [
     effect: {wis: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-14',
@@ -463,7 +492,7 @@ export const allCards: CardState[] = [
     effect: {wis: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-12',
@@ -473,7 +502,7 @@ export const allCards: CardState[] = [
     effect: {wis: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-8',
@@ -483,7 +512,7 @@ export const allCards: CardState[] = [
     effect: {wis: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-6',
@@ -493,7 +522,7 @@ export const allCards: CardState[] = [
     effect: {wis: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-4',
@@ -503,7 +532,7 @@ export const allCards: CardState[] = [
     effect: {wis: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   {
     id: 'wis-3',
@@ -513,7 +542,7 @@ export const allCards: CardState[] = [
     effect: {wis: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'wis-score'
+    slot: 'wis-score',
   },
   // Charisma ability score
   {
@@ -524,7 +553,7 @@ export const allCards: CardState[] = [
     effect: {cha: 20},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-18',
@@ -534,7 +563,7 @@ export const allCards: CardState[] = [
     effect: {cha: 18},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-16',
@@ -544,7 +573,7 @@ export const allCards: CardState[] = [
     effect: {cha: 16},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-14',
@@ -554,7 +583,7 @@ export const allCards: CardState[] = [
     effect: {cha: 14},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-12',
@@ -564,7 +593,7 @@ export const allCards: CardState[] = [
     effect: {cha: 12},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-8',
@@ -574,7 +603,7 @@ export const allCards: CardState[] = [
     effect: {cha: 8},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-6',
@@ -584,7 +613,7 @@ export const allCards: CardState[] = [
     effect: {cha: 6},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-4',
@@ -594,7 +623,7 @@ export const allCards: CardState[] = [
     effect: {cha: 4},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   {
     id: 'cha-3',
@@ -604,7 +633,7 @@ export const allCards: CardState[] = [
     effect: {cha: 3},
     copiesAvailable: 1,
     category: 'ability-score',
-    slot: 'cha-score'
+    slot: 'cha-score',
   },
   // Saving throws
   {
@@ -615,7 +644,7 @@ export const allCards: CardState[] = [
     effect: { strSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'str-save'
+    slot: 'str-save',
   },
   {
     id: 'dex-save',
@@ -625,7 +654,7 @@ export const allCards: CardState[] = [
     effect: { dexSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'dex-save'
+    slot: 'dex-save',
   },
   {
     id: 'con-save',
@@ -635,7 +664,7 @@ export const allCards: CardState[] = [
     effect: { conSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'con-save'
+    slot: 'con-save',
   },
   {
     id: 'int-save',
@@ -645,7 +674,7 @@ export const allCards: CardState[] = [
     effect: { intSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'int-save'
+    slot: 'int-save',
   },
   {
     id: 'wis-save',
@@ -655,7 +684,7 @@ export const allCards: CardState[] = [
     effect: { wisSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'wis-save'
+    slot: 'wis-save',
   },
   {
     id: 'cha-save',
@@ -665,7 +694,7 @@ export const allCards: CardState[] = [
     effect: { chaSave: proficiencyBonus },
     copiesAvailable: 1,
     category: 'saving-throw',
-    slot: 'cha-save'
+    slot: 'cha-save',
   },
   // Skills
   {
@@ -676,7 +705,7 @@ export const allCards: CardState[] = [
     effect: { acrobatics: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'acrobatics-bonus'
+    slot: 'acrobatics-bonus',
   },
   {
     id: 'animal-handling-prof',
@@ -686,7 +715,7 @@ export const allCards: CardState[] = [
     effect: { animalHandling: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'animal-handling-bonus'
+    slot: 'animal-handling-bonus',
   },
   {
     id: 'arcana-prof',
@@ -696,7 +725,7 @@ export const allCards: CardState[] = [
     effect: { arcana: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'arcana-bonus'
+    slot: 'arcana-bonus',
   },
   {
     id: 'athletics-prof',
@@ -706,7 +735,7 @@ export const allCards: CardState[] = [
     effect: { athletics: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'athletics-bonus'
+    slot: 'athletics-bonus',
   },
   {
     id: 'deception-prof',
@@ -716,7 +745,7 @@ export const allCards: CardState[] = [
     effect: { deception: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'deception-bonus'
+    slot: 'deception-bonus',
   },
   {
     id: 'history-prof',
@@ -726,7 +755,7 @@ export const allCards: CardState[] = [
     effect: { history: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'history-bonus'
+    slot: 'history-bonus',
   },
   {
     id: 'insight-prof',
@@ -736,7 +765,7 @@ export const allCards: CardState[] = [
     effect: { insight: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'insight-bonus'
+    slot: 'insight-bonus',
   },
   {
     id: 'intimidation-prof',
@@ -746,7 +775,7 @@ export const allCards: CardState[] = [
     effect: { intimidation: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'intimidation-bonus'
+    slot: 'intimidation-bonus',
   },
   {
     id: 'investigation-prof',
@@ -756,7 +785,7 @@ export const allCards: CardState[] = [
     effect: { investigation: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'investigation-bonus'
+    slot: 'investigation-bonus',
   },
   {
     id: 'medicine-prof',
@@ -766,7 +795,7 @@ export const allCards: CardState[] = [
     effect: { medicine: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'medicine-bonus'
+    slot: 'medicine-bonus',
   },
   {
     id: 'nature-prof',
@@ -776,7 +805,7 @@ export const allCards: CardState[] = [
     effect: { nature: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'nature-bonus'
+    slot: 'nature-bonus',
   },
   {
     id: 'perception-prof',
@@ -786,7 +815,7 @@ export const allCards: CardState[] = [
     effect: { perception: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'perception-bonus'
+    slot: 'perception-bonus',
   },
   {
     id: 'performance-prof',
@@ -796,7 +825,7 @@ export const allCards: CardState[] = [
     effect: { performance: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'performance-bonus'
+    slot: 'performance-bonus',
   },
   {
     id: 'persuasion-prof',
@@ -806,7 +835,7 @@ export const allCards: CardState[] = [
     effect: { persuasion: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'persuasion-bonus'
+    slot: 'persuasion-bonus',
   },
   {
     id: 'religion-prof',
@@ -816,7 +845,7 @@ export const allCards: CardState[] = [
     effect: { religion: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'religion-bonus'
+    slot: 'religion-bonus',
   },
   {
     id: 'sleight-of-hand-prof',
@@ -826,7 +855,7 @@ export const allCards: CardState[] = [
     effect: { sleightOfHand: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'sleight-of-hand-bonus'
+    slot: 'sleight-of-hand-bonus',
   },
   {
     id: 'stealth-prof',
@@ -836,7 +865,7 @@ export const allCards: CardState[] = [
     effect: { stealth: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'stealth-bonus'
+    slot: 'stealth-bonus',
   },
   {
     id: 'survival-prof',
@@ -846,7 +875,7 @@ export const allCards: CardState[] = [
     effect: { survival: proficiencyBonus },
     copiesAvailable: 1,
     category: 'skill',
-    slot: 'survival-bonus'
+    slot: 'survival-bonus',
   },
   // Expertise
   {
@@ -857,7 +886,7 @@ export const allCards: CardState[] = [
     effect: { acrobatics: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'acrobatics-bonus'
+    slot: 'acrobatics-bonus',
   },
   {
     id: 'animal-handling-expert',
@@ -867,7 +896,7 @@ export const allCards: CardState[] = [
     effect: { animalHandling: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'animal-handling-bonus'
+    slot: 'animal-handling-bonus',
   },
   {
     id: 'arcana-expert',
@@ -877,7 +906,7 @@ export const allCards: CardState[] = [
     effect: { arcana: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'arcana-bonus'
+    slot: 'arcana-bonus',
   },
   {
     id: 'athletics-expert',
@@ -887,7 +916,7 @@ export const allCards: CardState[] = [
     effect: { athletics: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'athletics-bonus'
+    slot: 'athletics-bonus',
   },
   {
     id: 'deception-expert',
@@ -897,7 +926,7 @@ export const allCards: CardState[] = [
     effect: { deception: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'deception-bonus'
+    slot: 'deception-bonus',
   },
   {
     id: 'history-expert',
@@ -907,7 +936,7 @@ export const allCards: CardState[] = [
     effect: { history: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'history-bonus'
+    slot: 'history-bonus',
   },
   {
     id: 'insight-expert',
@@ -917,7 +946,7 @@ export const allCards: CardState[] = [
     effect: { insight: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'insight-bonus'
+    slot: 'insight-bonus',
   },
   {
     id: 'intimidation-expert',
@@ -927,7 +956,7 @@ export const allCards: CardState[] = [
     effect: { intimidation: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'intimidation-bonus'
+    slot: 'intimidation-bonus',
   },
   {
     id: 'investigation-expert',
@@ -937,7 +966,7 @@ export const allCards: CardState[] = [
     effect: { investigation: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'investigation-bonus'
+    slot: 'investigation-bonus',
   },
   {
     id: 'medicine-expert',
@@ -947,7 +976,7 @@ export const allCards: CardState[] = [
     effect: { medicine: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'medicine-bonus'
+    slot: 'medicine-bonus',
   },
   {
     id: 'nature-expert',
@@ -957,7 +986,7 @@ export const allCards: CardState[] = [
     effect: { nature: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'nature-bonus'
+    slot: 'nature-bonus',
   },
   {
     id: 'perception-expert',
@@ -967,7 +996,7 @@ export const allCards: CardState[] = [
     effect: { perception: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'perception-bonus'
+    slot: 'perception-bonus',
   },
   {
     id: 'performance-expert',
@@ -977,7 +1006,7 @@ export const allCards: CardState[] = [
     effect: { performance: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'performance-bonus'
+    slot: 'performance-bonus',
   },
   {
     id: 'persuasion-expert',
@@ -987,7 +1016,7 @@ export const allCards: CardState[] = [
     effect: { persuasion: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'persuasion-bonus'
+    slot: 'persuasion-bonus',
   },
   {
     id: 'religion-expert',
@@ -997,7 +1026,7 @@ export const allCards: CardState[] = [
     effect: { religion: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'religion-bonus'
+    slot: 'religion-bonus',
   },
   {
     id: 'sleight-of-hand-expert',
@@ -1007,7 +1036,7 @@ export const allCards: CardState[] = [
     effect: { sleightOfHand: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'sleight-of-hand-bonus'
+    slot: 'sleight-of-hand-bonus',
   },
   {
     id: 'stealth-expert',
@@ -1017,7 +1046,7 @@ export const allCards: CardState[] = [
     effect: { stealth: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'stealth-bonus'
+    slot: 'stealth-bonus',
   },
   {
     id: 'survival-expert',
@@ -1027,6 +1056,165 @@ export const allCards: CardState[] = [
     effect: { survival: expertiseBonus },
     copiesAvailable: 1,
     category: 'expertise',
-    slot: 'survival-bonus'
+    slot: 'survival-bonus',
+  },
+  // Weapon and armor proficiency
+  {
+    id: 'simple-weapons-prof',
+    pointCost: 1,
+    flavor: "Nothin' fancy.",
+    description: `Simple weapons proficiency (${prof})`,
+    effect: { weaponsProf: WeaponsProf.Simple },
+    copiesAvailable: 1,
+    category: 'weapons',
+    slot: 'weapons-prof',
+  },
+  {
+    id: 'martial-weapons-prof',
+    pointCost: 2,
+    flavor: "I studied the way of the blade.",
+    description: `Martial weapons proficiency (${prof})`,
+    effect: { weaponsProf: WeaponsProf.Martial },
+    copiesAvailable: 1,
+    category: 'weapons',
+    slot: 'weapons-prof',
+  },
+  {
+    id: 'firearm-weapons-prof',
+    pointCost: 2,
+    flavor: "This end towards enemy.",
+    description: `Firearms proficiency (${prof})`,
+    effect: { firearmsProf: true },
+    copiesAvailable: 1,
+    category: 'weapons',
+  },
+  // Armor proficiency
+  {
+    id: 'light-armor-prof',
+    pointCost: 2,
+    flavor: "Light on your feet. Smart.",
+    description: `Light armor proficiency.`,
+    effect: { armorProf: ArmorProf.Light },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'armor-prof',
+  },
+  {
+    id: 'medium-armor-prof',
+    pointCost: 3,
+    flavor: "Bit better protected now.",
+    description: `Medium armor proficiency.`,
+    effect: { armorProf: ArmorProf.Medium },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'armor-prof',
+  },
+  {
+    id: 'heavy-armor-prof',
+    pointCost: 4,
+    flavor: "You'll hear me coming.",
+    description: `Heavy armor proficiency.`,
+    effect: { armorProf: ArmorProf.Heavy },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'armor-prof',
+  },
+  {
+    id: 'shield-prof',
+    pointCost: 2,
+    flavor: "Armor on your arm.",
+    description: `Shield proficiency.`,
+    effect: { shieldProf: true },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'shield-prof',
+  },
+  // Equipped armor features
+  {
+    id: 'unarmored-con',
+    pointCost: 3,
+    flavor: "Still unarmored, but tougher.",
+    description: `Unarmored (10+Dex+Con AC)`,
+    effect: { armorAddCon: true },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'base-armor',
+  },
+  {
+    id: 'unarmored-wis',
+    pointCost: 3,
+    flavor: "I saw it coming.",
+    description: `Unarmored (10+Dex+Wis AC)`,
+    effect: { armorAddWis: true },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'base-armor',
+  },
+  {
+    id: 'natural-light-armor',
+    pointCost: 2,
+    flavor: "I'm covered with scales.",
+    description: `Natural armor (13+Dex AC)`,
+    effect: { baseArmorClass: 13 },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'base-armor',
+  },
+  {
+    id: 'natural-con-armor',
+    pointCost: 2,
+    flavor: "I have a tough hide.",
+    description: `Natural armor (12+Con AC)`,
+    effect: { baseArmorClass: 12, armorMaxDexBonus: 0, armorAddCon: true },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'base-armor',
+  },
+  {
+    id: 'natural-heavy-armor',
+    pointCost: 4,
+    flavor: "Bounces right off my carapace.",
+    description: `Natural armor (17 AC)`,
+    effect: { baseArmorClass: 17, armorMaxDexBonus: 0 },
+    copiesAvailable: 1,
+    category: 'armor',
+    slot: 'base-armor',
+  },
+  // Equipped armor
+  {
+    id: 'studded-leather-armor',
+    pointCost: 1,
+    flavor: "I like to move around.",
+    description: `Studded leather armor (12+Dex AC)`,
+    effect: { baseArmorClass: 12 },
+    copiesAvailable: 1,
+    category: 'equipped-armor',
+    slot: 'base-armor',
+    requires: { armorProf: ArmorProf.Light },
+    addRequirements: ['light-armor-prof'],
+  },
+  {
+    id: 'breastplate-armor',
+    pointCost: 1,
+    flavor: "This bit is very well protected.",
+    description: `Breastplate armor (14+Dex AC, max 16)`,
+    effect: { baseArmorClass: 14, armorMaxDexBonus: 2 },
+    copiesAvailable: 1,
+    category: 'equipped-armor',
+    slot: 'base-armor',
+    requires: { armorProf: ArmorProf.Medium },
+    addRequirements: ['medium-armor-prof'],
+  },
+  {
+    id: 'plate-armor',
+    pointCost: 1,
+    flavor: "This thing weighs a ton.",
+    description: `Plate armor (18 AC)`,
+    effect: { baseArmorClass: 18, armorMaxDexBonus: 0 },
+    copiesAvailable: 1,
+    category: 'equipped-armor',
+    slot: 'base-armor',
+    requires: { armorProf: ArmorProf.Heavy, str: 16 },
+    addRequirements: ['heavy-armor-prof', 'str-16'],
   },
 ]

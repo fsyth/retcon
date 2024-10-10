@@ -1,3 +1,5 @@
+import { ArmorProf, WeaponsProf } from "./cards"
+
 export type Ability =
   'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
 
@@ -42,6 +44,17 @@ export interface CharacterState {
   sleightOfHand: number
   stealth: number
   survival: number
+
+  weaponsProf: WeaponsProf
+  firearmsProf: boolean
+
+  armorProf: ArmorProf
+  shieldProf: boolean
+
+  baseArmorClass: number
+  armorMaxDexBonus: number
+  armorAddCon: boolean
+  armorAddWis: boolean
 
   //hp: number
   //hitDie: number
@@ -91,4 +104,15 @@ export const initialCharacter: CharacterState = Object.freeze({
   sleightOfHand: 0,
   stealth: 0,
   survival: 0,
+
+  weaponsProf: WeaponsProf.None,
+  firearmsProf: false,
+
+  armorProf: ArmorProf.None,
+  shieldProf: false,
+
+  baseArmorClass: 10,
+  armorMaxDexBonus: Infinity,
+  armorAddCon: false,
+  armorAddWis: false,
 })

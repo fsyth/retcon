@@ -1,24 +1,24 @@
 import React, { useState } from 'react'
 import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@mui/joy'
 
-import Card from './Card'
 import CardFilters from './CardFilters'
+import CardsByGroup from './CardsByGroup'
+import CardGrid from './CardGrid'
 
 import type { CardState } from './cards'
 import { useAppSelector } from '../../app/hooks'
 import { selectAllCards, selectSelectedCards } from './characterBuilderSlice'
-
-import style from './CharacterBuilder.module.css'
 
 interface CardShopProps {
   filter?: (card: CardState) => boolean
   showSoldOut?: boolean
   showConflictTooltips?: boolean
   userFilters?: boolean
+  groupBy?: (card: CardState) => string
 }
 
 export default function CardShop({
-  filter, showSoldOut, showConflictTooltips, userFilters
+  filter, showSoldOut, showConflictTooltips, userFilters, groupBy
 }: CardShopProps) {
   const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
   const [selections, setSelections] = useState<string[]>([])
@@ -45,7 +45,6 @@ export default function CardShop({
     [card, card.slot && selectedCards.find(sc => sc.slot === card.slot)]) as
     [CardState, CardState | undefined][]
 
-
   return (
     <AccordionGroup>
       <Accordion defaultExpanded={true}>
@@ -54,22 +53,15 @@ export default function CardShop({
           {userFilters &&
             <CardFilters
               selections={selections} setSelections={setSelections}
-              priceRange={priceRange} setPriceRange={setPriceRange}
-            />
+              priceRange={priceRange} setPriceRange={setPriceRange} />
           }
           {cardsWithConflicts.length === 0
             ? <p>Nothing to see here.</p>
-            : <div className={style.cardGrid}>
-                {cardsWithConflicts.map(([card, conflict]) =>
-                  <Card
-                    key={card.id}
-                    id={card.id}
-                    canBuy
-                    conflict={conflict?.id}
-                    showConflictTooltip={showConflictTooltips}
-                  />
-                )}
-              </div>
+            : <CardsByGroup 
+                cardsWithConflicts={cardsWithConflicts}
+                groupBy={groupBy}
+                showConflictTooltips={showConflictTooltips} 
+                canBuy />
           }
         </AccordionDetails>
       </Accordion>
@@ -77,14 +69,11 @@ export default function CardShop({
         <Accordion>
           <AccordionSummary>Sold Out</AccordionSummary>
           <AccordionDetails>
-            <div className={style.cardGrid}>
-              {filteredCards.filter(card => card.copiesAvailable <= 0).map(card =>
-                <Card
-                  key={card.id}
-                  id={card.id}
-                  canBuy />
-              )}
-            </div>
+            <CardGrid
+              cardsWithConflicts={filteredCards
+                .filter(card => card.copiesAvailable <= 0)
+                .map(card => [card, undefined])}
+              canBuy />
           </AccordionDetails>
         </Accordion>
       }

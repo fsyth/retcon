@@ -1,8 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../../app/store';
-import { allCards, CardState } from './cards';
-import { initialCharacter } from './character';
+import { allCards, type CardState } from './cards';
+import { initialCharacter, type CharacterState } from './character';
 
 export interface CharacterBuilderState {
   pointBudget: number
@@ -78,7 +78,7 @@ export const selectCharacter = createSelector([selectSelectedCards], selectedCar
     character = {...character, ...card.effect}
   }
 
-  return character
+  return character as CharacterState
 })
 
 export default characterBuilderSlice.reducer;

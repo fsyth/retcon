@@ -1,9 +1,9 @@
 import React from 'react'
 
-import CharacterStats from './CharacterStats'
+import PointBudget from './PointBudget'
+import CharacterSheet from './CharacterSheet'
 import CardInventory from './CardInventory'
 import CardShop from './CardShop'
-import PointBudget from './PointBudget'
 
 import styles from './CharacterBuilder.module.css'
 
@@ -12,9 +12,9 @@ export default function CharacterBuilder() {
     <div className={styles.characterBuilder}>
       <h1>Retcon Character Builder</h1>
       <PointBudget sticky/>
-      <CharacterStats />
+      <CharacterSheet />
       <CardInventory />
-      <CardShop userFilters showConflictTooltips/>
+      <CardShop groupBy={card => card.category} userFilters showConflictTooltips/>
     </div>
   )
 }

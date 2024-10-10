@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
-import { Modal, ModalDialog } from '@mui/joy'
 
 import AbilityScore from './AbilityScore'
 import SkillBonus from './SkillBonus'
-import PointBudget from './PointBudget'
-import CardInventory from './CardInventory'
-import CardShop from './CardShop'
+import ModalShop from './ModalShop'
 
 import type { Slot } from './cards'
 
@@ -181,15 +178,10 @@ export default function CharacterStats() {
             onClick={showCardsForSlot} />
         </div>
       </div>
-      <Modal open={slotToShow !== null} onClose={() => setSlotToShow(null)}>
-        <ModalDialog>
-          <div className={style.scrollable}>
-            <PointBudget />
-            <CardInventory filter={card => card.slot === slotToShow} />
-            <CardShop filter={card => card.slot === slotToShow} />
-          </div>
-        </ModalDialog>
-      </Modal>
+      <ModalShop
+        open={slotToShow !== null}
+        onClose={() => setSlotToShow(null)}
+        filter={card => card.slot === slotToShow} />
     </div>
   )
 }

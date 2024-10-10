@@ -5,37 +5,11 @@ import Card from './Card'
 
 import type { Ability, Save, Skill } from './character'
 import type { Slot } from './cards'
+import { formatModifier, modifier, translate } from './utils'
 import { useAppSelector } from '../../app/hooks'
 import { selectCharacter, selectSelectedCards } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
-
-const translate = {
-  strSave: 'Save',
-  dexSave: 'Save',
-  conSave: 'Save',
-  intSave: 'Save',
-  wisSave: 'Save',
-  chaSave: 'Save',
-  acrobatics: 'Acrobatics',
-  animalHandling: 'Animal handling',
-  arcana: 'Arcana',
-  athletics: 'Athletics',
-  deception: 'Deception',
-  history: 'History',
-  insight: 'Insight',
-  intimidation: 'Intimidation',
-  investigation: 'Investigation',
-  medicine: 'Medicine',
-  nature: 'Nature',
-  perception: 'Perception',
-  performance: 'Performance',
-  persuasion: 'Persuasion',
-  religion: 'Religion',
-  sleightOfHand: 'Sleight of hand',
-  stealth: 'Stealth',
-  survival: 'Survival',
-}
 
 interface SkillBonusProps {
   ability: Ability
@@ -53,11 +27,10 @@ export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonus
   const slotName = skill.endsWith('Save') ? `${ability}-save` : `${skill}-bonus`
   const cardForSlot = selectedCards.find(card => card.slot === slotName)
 
-  const modifier = Math.floor((score - 10) / 2) + bonus
-  const formattedModifier =
-    new Intl.NumberFormat('en-US', {signDisplay: 'always'}).format(modifier)
+  const mod = modifier(score) + bonus
+  const formattedMod = formatModifier(mod)
 
-  const formattedName = translate[skill]
+  const formattedName = translate(skill)
 
   return (
     <Tooltip
@@ -68,7 +41,7 @@ export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonus
     >
       <div className={style.skillBonus} onClick={() => onClick && onClick(slot)}>
         <span className={style.skill}>{formattedName}</span>
-        <span className={style.bonus}>{formattedModifier}</span>
+        <span className={style.bonus}>{formattedMod}</span>
       </div>
     </Tooltip>
   )

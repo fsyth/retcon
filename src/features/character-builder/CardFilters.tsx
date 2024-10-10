@@ -1,6 +1,8 @@
 import React from 'react'
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, List, ListItem, Sheet, Slider } from '@mui/joy'
 
+import { translate } from './utils'
+
 import style from './CharacterBuilder.module.css'
 
 interface CardFiltersProps {
@@ -15,36 +17,12 @@ export default function CardFilters({
 ) {
   const options = [
     [
-      ['ability-score', 'Ability score'],
-      ['str-score', 'Strength'],
-      ['dex-score', 'Dexterity'],
-      ['con-score', 'Constitution'],
-      ['int-score', 'Intelligence'],
-      ['wis-score', 'Wisdom'],
-      ['cha-score', 'Charisma'],
-      ['saving-throw', 'Saving throw'],
-    ],
-    [
-      ['skill', 'Skill'],
-      ['expertise', 'Expertise'],
-      ['acrobatics-bonus', 'Acrobatics'],
-      ['animal-handling-bonus', 'Animal handling'],
-      ['arcana-bonus', 'Arcana'],
-      ['athletics-bonus', 'Athletics'],
-      ['deception-bonus', 'Deception'],
-      ['history-bonus', 'History'],
-      ['insight-bonus', 'Insight'],
-      ['intimidation-bonus', 'Intimidation'],
-      ['investigation-bonus', 'Investigation'],
-      ['medicine-bonus', 'Medicine'],
-      ['nature-bonus', 'Nature'],
-      ['perception-bonus', 'Perception'],
-      ['performance-bonus', 'Performance'],
-      ['persuasion-bonus', 'Persuasion'],
-      ['religion-bonus', 'Religion'],
-      ['sleight-of-hand-bonus', 'Sleight of hand'],
-      ['stealth-bonus', 'Stealth'],
-      ['survival-bonus', 'Survival'],
+      'ability-score',
+      'saving-throw',
+      'skill',
+      'expertise',
+      'weapons',
+      'armor',
     ]
   ]
 
@@ -56,12 +34,12 @@ export default function CardFilters({
           <List>
             {options.map((section, index) =>
               <List key={index} orientation="horizontal" wrap>
-                {section.map(([option, optionLabel]) =>
+                {section.map((option) =>
                   <ListItem key={option} sx={{ margin: '0.2rem' }}>
                     <Checkbox
                       overlay
                       disableIcon
-                      label={optionLabel}
+                      label={translate(option)}
                       checked={selections.includes(option)}
                       variant="soft"
                       onChange={e =>

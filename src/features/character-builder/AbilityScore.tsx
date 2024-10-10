@@ -5,6 +5,7 @@ import Card from './Card'
 
 import type { Ability } from './character'
 import type { Slot } from './cards'
+import { formatModifier, modifier } from './utils'
 import { useAppSelector } from '../../app/hooks'
 import { selectCharacter, selectSelectedCards } from './characterBuilderSlice'
 
@@ -23,9 +24,7 @@ export default function AbilityScore({ ability, slot, onClick }: AbilityScorePro
   const selectedCards = useAppSelector(selectSelectedCards)
   const cardForSlot = selectedCards.find(card => card.slot === slot)
 
-  const modifier = Math.floor((score - 10) / 2)
-  const formattedModifier =
-    new Intl.NumberFormat('en-US', {signDisplay: 'always'}).format(modifier)
+  const formattedMod = formatModifier(modifier(score))
 
   return (
     <Tooltip
@@ -34,9 +33,9 @@ export default function AbilityScore({ ability, slot, onClick }: AbilityScorePro
       arrow
       disableHoverListener={cardForSlot === undefined}
     >
-      <div className={style.abilityScore} onClick={() => onClick && onClick(slot)}>
+      <div className={style.abilityBox} onClick={() => onClick && onClick(slot)}>
         <p className={style.ability}>{ability}</p>
-        <p className={style.modifier}>{formattedModifier}</p>
+        <p className={style.modifier}>{formattedMod}</p>
         <p className={style.score}>{score}</p>
       </div>
     </Tooltip>
