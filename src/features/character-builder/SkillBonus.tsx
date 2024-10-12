@@ -34,9 +34,10 @@ export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonus
 
   return (
     <Tooltip
-      title={cardForSlot !== undefined && <Card id={cardForSlot.id} />}
+      title={cardForSlot !== undefined && <Card id={cardForSlot.id} canSell />}
       placement="right"
       arrow
+      variant="outlined"
       disableHoverListener={cardForSlot === undefined}
     >
       <div className={style.skillBonus} onClick={() => onClick && onClick(slot)}>

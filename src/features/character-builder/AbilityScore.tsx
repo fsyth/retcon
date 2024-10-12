@@ -28,9 +28,10 @@ export default function AbilityScore({ ability, slot, onClick }: AbilityScorePro
 
   return (
     <Tooltip
-      title={cardForSlot !== undefined && <Card id={cardForSlot.id} />}
-      placement="bottom"
+      title={cardForSlot !== undefined && <Card id={cardForSlot.id} canSell />}
+      placement="right"
       arrow
+      variant="outlined"
       disableHoverListener={cardForSlot === undefined}
     >
       <div className={style.abilityBox} onClick={() => onClick && onClick(slot)}>

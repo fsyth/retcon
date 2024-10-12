@@ -96,6 +96,7 @@
 }
 
 .featureCard {
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 6px;
   margin: 0.2rem;
@@ -104,9 +105,9 @@
 }
 
 .featureCard Button {
-  float: right;
-  margin-top: calc(-0.5rem - 1px);
-  margin-right: calc(-0.5rem - 1px);
+  position: absolute;
+  top: -1px;
+  right: -1px;
   /* width: 2.5rem; */
   height: 2.5rem;
   border-radius: 6px;
@@ -114,6 +115,12 @@
 
 .featureCard p {
   margin-top: 0;
+}
+
+.featureCard .requires {
+  margin-left: 0.5em;
+  cursor: pointer;
+  color: #888;
 }
 
 .cardGrid {

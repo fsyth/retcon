@@ -11,6 +11,7 @@ export function translate(key: string) {
     ? translations[key]
     : key
 }
+
 const translations: { [key: string]: string } = {
   strSave: 'Save',
   dexSave: 'Save',

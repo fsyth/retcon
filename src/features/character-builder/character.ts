@@ -1,4 +1,4 @@
-import { ArmorProf, WeaponsProf } from "./cards"
+import { ArmorProf, CardEffect, WeaponsProf } from './cards'
 
 export type Ability =
   'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha'
@@ -11,7 +11,7 @@ export type Skill =
   'insight' | 'intimidation' | 'investigation' | 'medicine' | 'nature' | 'perception' |
   'performance' | 'persuasion' | 'religion' | 'sleightOfHand' | 'stealth' | 'survival'
 
-export interface CharacterState {
+export interface CharacterState extends CardEffect {
   str: number
   dex: number
   con: number
@@ -116,3 +116,22 @@ export const initialCharacter: CharacterState = Object.freeze({
   armorAddCon: false,
   armorAddWis: false,
 })
+
+export function getMissingRequirements(
+  character: CharacterState, requires: CardEffect, addRequirements: string[]
+) {
+  const c = character as any as {[key: string]: number}
+  const r = requires  as any as {[key: string]: number}
+  
+  let index = 0
+  const cardsToAdd = []
+
+  for (let key in requires) {
+    if (c[key] < r[key])
+      cardsToAdd.push(addRequirements[index])
+
+    ++index
+  }
+
+  return cardsToAdd
+}

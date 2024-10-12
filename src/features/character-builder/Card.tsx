@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button, Tooltip } from '@mui/joy'
 
+import { getMissingRequirements } from './character'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { buyCard, sellCard, selectCardById, selectSelectedCards } from './characterBuilderSlice'
+import { buyCard, sellCard, selectCardById, selectSelectedCards, selectCharacter } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -18,36 +19,61 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
 
   const card = useAppSelector(selectCardById(id))
   const selectedCards = useAppSelector(selectSelectedCards)
+  const character = useAppSelector(selectCharacter)
   
   if (card === undefined)
     return <div className="feature-card">Unknown card id: {id}</div>
   
-  const { pointCost, flavor, description, copiesAvailable, slot } = card
+  const { pointCost, flavor, description, copiesAvailable, slot, requires, addRequirements } = card
 
   const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === card.slot)
+
+  const missingRequirements = (requires && addRequirements &&
+    getMissingRequirements(character, requires, addRequirements)) || []
+
+  // Ensure cards get automatically sold if their requirements were sold
+  if (canSell && missingRequirements.length > 0)
+    dispatch(sellCard(id))
 
   return (
     <div className={style.featureCard}>
       <p>
         <strong>{pointCost} RP</strong>
+        {missingRequirements.length > 0 &&
+          <Tooltip
+            title={
+              <>
+                {missingRequirements.map(requiredId =>
+                  <Card key={requiredId} id={requiredId} canBuy />
+                )}
+              </>
+            }
+            placement="top"
+            arrow
+            variant="outlined"
+          >
+            <span className={style.requires}>requires...</span>
+          </Tooltip>
+        }
         {canBuy && !conflict &&
           <Button
             color="success"
             variant="outlined"
             onClick={() => dispatch(buyCard(id))}
-            disabled={copiesAvailable <= 0}>Buy</Button>}
+            disabled={copiesAvailable <= 0 || missingRequirements.length > 0}>Buy</Button>}
         {canBuy && conflict &&
           <Tooltip 
-            title={<Card id={conflict.id}/>}
+            title={<Card id={conflict.id} canSell />}
             placement="top"
-            arrow={true}
+            arrow
+            variant="outlined"
             disableHoverListener={showConflictTooltip !== true}
           >
             <Button
               color="warning"
-            variant="outlined"
+              variant="outlined"
               onClick={() => dispatch(buyCard(id))}
-              disabled={copiesAvailable <= 0}>Replace</Button>    
+              disabled={copiesAvailable <= 0 || missingRequirements.length > 0}>Replace</Button>    
           </Tooltip>
         }
         {canSell &&
