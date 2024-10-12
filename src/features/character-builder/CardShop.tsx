@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@mui/joy'
 
 import CardFilters from './CardFilters'
@@ -20,17 +20,9 @@ interface CardShopProps {
 export default function CardShop({
   filter, showSoldOut, showConflictTooltips, userFilters, groupBy
 }: CardShopProps) {
-  const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
-  const [selections, setSelections] = useState<string[]>([])
-
-  const userFilter = (card: CardState) =>
-    !userFilters || (
-      (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
-      (selections.length === 0 ||
-        selections.includes(card.category) ||
-        (card.slot !== undefined && selections.includes(card.slot))
-      )
-    )
+  const [userFilter, setUserFilter] = useState(() => (card: CardState) => true)
+  const handleUserFilterChanged = useCallback(
+    (filter: (card: CardState) => boolean) => setUserFilter(() => filter), [])
 
   // To detect conflicts
   const selectedCards = useAppSelector(selectSelectedCards)
@@ -51,9 +43,7 @@ export default function CardShop({
         <AccordionSummary>Card Shop</AccordionSummary>
         <AccordionDetails>
           {userFilters &&
-            <CardFilters
-              selections={selections} setSelections={setSelections}
-              priceRange={priceRange} setPriceRange={setPriceRange} />
+            <CardFilters onFiltersChanged={handleUserFilterChanged} />
           }
           {cardsWithConflicts.length === 0
             ? <p>Nothing to see here.</p>

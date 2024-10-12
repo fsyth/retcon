@@ -1,20 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Accordion, AccordionDetails, AccordionSummary, Checkbox, List, ListItem, Sheet, Slider } from '@mui/joy'
 
+import type { CardState } from './cards'
 import { translate } from './utils'
 
 import style from './CharacterBuilder.module.css'
 
 interface CardFiltersProps {
-  selections: string[]
-  setSelections: (selections: string[]) => void
-  priceRange: [number, number]
-  setPriceRange: (priceRange: [number, number]) => void
+  onFiltersChanged: (filter: ((card: CardState) => boolean)) => void
 }
 
-export default function CardFilters({
-  selections, setSelections, priceRange, setPriceRange}: CardFiltersProps
+export default function CardFilters({ onFiltersChanged }: CardFiltersProps
 ) {
+  const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
+  const [selections, setSelections] = useState<string[]>([])
+
   const options = [
     [
       'ability-score',
@@ -25,6 +25,17 @@ export default function CardFilters({
       'armor',
     ]
   ]
+  
+  useEffect(() => {
+    const userFilter = (card: CardState) =>
+      (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
+      (selections.length === 0 ||
+        selections.includes(card.category) ||
+        (card.slot !== undefined && selections.includes(card.slot))
+      )
+
+    onFiltersChanged(userFilter)  
+  }, [priceRange, selections, onFiltersChanged])
 
   return (
     <Sheet className={style.rounded} variant="outlined">
