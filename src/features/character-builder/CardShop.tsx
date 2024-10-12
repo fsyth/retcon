@@ -3,7 +3,6 @@ import { Accordion, AccordionDetails, AccordionGroup, AccordionSummary } from '@
 
 import CardFilters from './CardFilters'
 import CardsByGroup from './CardsByGroup'
-import CardGrid from './CardGrid'
 
 import type { CardState } from './cards'
 import { useAppSelector } from '../../app/hooks'
@@ -11,14 +10,13 @@ import { selectAllCards } from './characterBuilderSlice'
 
 interface CardShopProps {
   filter?: (card: CardState) => boolean
-  showSoldOut?: boolean
   showConflictTooltips?: boolean
   userFilters?: boolean
   groupBy?: (card: CardState) => string
 }
 
 export default function CardShop({
-  filter, showSoldOut, showConflictTooltips, userFilters, groupBy
+  filter, showConflictTooltips, userFilters, groupBy
 }: CardShopProps) {
   const [userFilter, setUserFilter] = useState(() => (card: CardState) => true)
   const handleUserFilterChanged = useCallback(
@@ -29,7 +27,6 @@ export default function CardShop({
   const filteredCards =
     (filter ? allCards.filter(filter) : allCards)
     .filter(userFilter)
-    .filter(card => card.copiesAvailable > 0)
 
   return (
     <AccordionGroup>
@@ -49,16 +46,6 @@ export default function CardShop({
           }
         </AccordionDetails>
       </Accordion>
-      {showSoldOut &&
-        <Accordion>
-          <AccordionSummary>Sold Out</AccordionSummary>
-          <AccordionDetails>
-            <CardGrid
-              cards={filteredCards.filter(card => card.copiesAvailable <= 0)}
-              canBuy />
-          </AccordionDetails>
-        </Accordion>
-      }
     </AccordionGroup>
   )
 }

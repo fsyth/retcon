@@ -26,6 +26,20 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
   
   const { pointCost, flavor, description, copiesAvailable, slot, requires, addRequirements } = card
 
+  if (canBuy && copiesAvailable <= 0)
+    return (
+      <div className={[style.featureCard, style.soldOut].join(' ')}>
+        <Tooltip
+          title={<Card id={id} canSell />}
+          placement="top"
+          arrow
+          variant="outlined"
+        >
+          <span className={style.pointer}>Sold out!</span>
+        </Tooltip>
+      </div>
+    )
+
   const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === card.slot)
 
   const missingRequirements = (requires && addRequirements &&

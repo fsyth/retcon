@@ -44,6 +44,7 @@ export default function ArmorClass() {
     <div>
       <Tooltip
         title={
+          cardsForCategory.length > 0 &&
           cardsForCategory.map(card =>
             <Card key={card.id} id={card.id} canSell />
           )
@@ -51,7 +52,6 @@ export default function ArmorClass() {
         placement="right"
         arrow
         variant="outlined"
-        disableHoverListener={cardsForCategory.length === 0}
       >
         <div className={style.abilityBox} onClick={() => setShowModal(true)}>
           <p className={style.ability}>AC</p>

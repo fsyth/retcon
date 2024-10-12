@@ -38,7 +38,6 @@ export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonus
       placement="right"
       arrow
       variant="outlined"
-      disableHoverListener={cardForSlot === undefined}
     >
       <div className={style.skillBonus} onClick={() => onClick && onClick(slot)}>
         <span className={style.skill}>{formattedName}</span>

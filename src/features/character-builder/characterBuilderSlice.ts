@@ -26,13 +26,14 @@ export const characterBuilderSlice = createSlice({
       if (card === undefined || card.copiesAvailable <= 0)
         return
 
+      // Replace the card, if any, occupying the slot
       if (card.slot !== undefined) {
         const conflictingCardId = state.selectedCards.find(c => c.slot === card.slot)?.id
         if (conflictingCardId !== undefined) {
           const conflictingCard = state.allCards.find(c => c.id === conflictingCardId)
           if (conflictingCard !== undefined) {
             conflictingCard.copiesAvailable += 1
-            state.selectedCards = state.selectedCards.filter(c => c.id !== conflictingCard.id)
+            state.selectedCards = state.selectedCards.filter(c => c.id !== conflictingCardId)
           }
         }
       }
@@ -41,6 +42,11 @@ export const characterBuilderSlice = createSlice({
       card.copiesAvailable -= 1
     },
     sellCard: (state, action: PayloadAction<string>) => {
+      // Can only sell cards that have been selected
+      if (!state.selectedCards.find(c => c.id === action.payload))
+        return
+
+      // Need to write to the card instance in the shop
       const card = state.allCards.find(c => c.id === action.payload)
 
       if (card === undefined)

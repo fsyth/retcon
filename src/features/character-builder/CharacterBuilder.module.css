@@ -123,6 +123,14 @@
   color: #888;
 }
 
+.featureCard.soldOut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e0e4e8;
+  color: #888
+}
+
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -138,4 +146,8 @@
   position: sticky;
   top: 1rem;
   z-index: 1100;
+}
+
+.pointer {
+  cursor: pointer;
 }

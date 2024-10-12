@@ -32,7 +32,6 @@ export default function AbilityScore({ ability, slot, onClick }: AbilityScorePro
       placement="right"
       arrow
       variant="outlined"
-      disableHoverListener={cardForSlot === undefined}
     >
       <div className={style.abilityBox} onClick={() => onClick && onClick(slot)}>
         <p className={style.ability}>{ability}</p>
