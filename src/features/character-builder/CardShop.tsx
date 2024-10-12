@@ -7,7 +7,7 @@ import CardGrid from './CardGrid'
 
 import type { CardState } from './cards'
 import { useAppSelector } from '../../app/hooks'
-import { selectAllCards, selectSelectedCards } from './characterBuilderSlice'
+import { selectAllCards } from './characterBuilderSlice'
 
 interface CardShopProps {
   filter?: (card: CardState) => boolean
@@ -24,18 +24,12 @@ export default function CardShop({
   const handleUserFilterChanged = useCallback(
     (filter: (card: CardState) => boolean) => setUserFilter(() => filter), [])
 
-  // To detect conflicts
-  const selectedCards = useAppSelector(selectSelectedCards)
-  
   // Apply filter from props and user filters
   const allCards = useAppSelector(selectAllCards)
-  const filteredCards = (filter ? allCards.filter(filter) : allCards).filter(userFilter)
-
-  const availableCards = filteredCards.filter(card => card.copiesAvailable > 0)
-
-  const cardsWithConflicts = availableCards.map(card =>
-    [card, card.slot && selectedCards.find(sc => sc.slot === card.slot)]) as
-    [CardState, CardState | undefined][]
+  const filteredCards =
+    (filter ? allCards.filter(filter) : allCards)
+    .filter(userFilter)
+    .filter(card => card.copiesAvailable > 0)
 
   return (
     <AccordionGroup>
@@ -45,10 +39,10 @@ export default function CardShop({
           {userFilters &&
             <CardFilters onFiltersChanged={handleUserFilterChanged} />
           }
-          {cardsWithConflicts.length === 0
+          {filteredCards.length === 0
             ? <p>Nothing to see here.</p>
             : <CardsByGroup 
-                cardsWithConflicts={cardsWithConflicts}
+                cards={filteredCards}
                 groupBy={groupBy}
                 showConflictTooltips={showConflictTooltips} 
                 canBuy />
@@ -60,9 +54,7 @@ export default function CardShop({
           <AccordionSummary>Sold Out</AccordionSummary>
           <AccordionDetails>
             <CardGrid
-              cardsWithConflicts={filteredCards
-                .filter(card => card.copiesAvailable <= 0)
-                .map(card => [card, undefined])}
+              cards={filteredCards.filter(card => card.copiesAvailable <= 0)}
               canBuy />
           </AccordionDetails>
         </Accordion>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Tooltip } from '@mui/joy'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectCardById, buyCard, sellCard } from './characterBuilderSlice'
+import { buyCard, sellCard, selectCardById, selectSelectedCards } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -10,19 +10,21 @@ interface CardProps {
   id: string
   canBuy?: boolean
   canSell?: boolean
-  conflict?: string
   showConflictTooltip?: boolean
 }
 
-export default function Card({ id, canBuy, canSell, conflict, showConflictTooltip }: CardProps) {
+export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardProps) {
   const dispatch = useAppDispatch()
 
   const card = useAppSelector(selectCardById(id))
-
+  const selectedCards = useAppSelector(selectSelectedCards)
+  
   if (card === undefined)
     return <div className="feature-card">Unknown card id: {id}</div>
+  
+  const { pointCost, flavor, description, copiesAvailable, slot } = card
 
-  const { pointCost, flavor, description, copiesAvailable } = card
+  const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === card.slot)
 
   return (
     <div className={style.featureCard}>
@@ -36,7 +38,7 @@ export default function Card({ id, canBuy, canSell, conflict, showConflictToolti
             disabled={copiesAvailable <= 0}>Buy</Button>}
         {canBuy && conflict &&
           <Tooltip 
-            title={<Card id={conflict}/>}
+            title={<Card id={conflict.id}/>}
             placement="top"
             arrow={true}
             disableHoverListener={showConflictTooltip !== true}

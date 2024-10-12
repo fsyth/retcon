@@ -6,8 +6,8 @@ import CardGrid from './CardGrid'
 import type { CardState } from './cards'
 import { translate } from './utils'
 
-interface CardsByCategoryProps {
-  cardsWithConflicts: [CardState, CardState?][]
+interface CardsByGroupProps {
+  cards: CardState[]
   canBuy?: boolean
   canSell?: boolean
   showConflictTooltips?: boolean
@@ -15,12 +15,12 @@ interface CardsByCategoryProps {
 }
 
 export default function CardsByGroup({
-  cardsWithConflicts, canBuy, canSell, showConflictTooltips, groupBy
-}: CardsByCategoryProps) {
+  cards, canBuy, canSell, showConflictTooltips, groupBy
+}: CardsByGroupProps) {
   if (groupBy === undefined)
     return (
       <CardGrid
-        cardsWithConflicts={cardsWithConflicts}
+        cards={cards}
         canBuy={canBuy}
         canSell={canSell}
         showConflictTooltips={showConflictTooltips} />
@@ -29,7 +29,7 @@ export default function CardsByGroup({
   // Ordered set of categories
   const groups: string[] = []
 
-  for (let [card] of cardsWithConflicts) {
+  for (let card of cards) {
     const group = groupBy(card)
     if (!groups.includes(group))
       groups.push(group)
@@ -41,7 +41,7 @@ export default function CardsByGroup({
         <div key={group}>
           <Divider>{translate(group)}</Divider>
           <CardGrid
-            cardsWithConflicts={cardsWithConflicts.filter(([card]) => groupBy(card) === group)}
+            cards={cards.filter(card => groupBy(card) === group)}
             canBuy={canBuy}
             canSell={canSell}
             showConflictTooltips={showConflictTooltips} />
