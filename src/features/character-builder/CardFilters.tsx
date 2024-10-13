@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Accordion, AccordionDetails, AccordionSummary, List, Sheet, Slider } from '@mui/joy'
 
 import FilterToggle from './FilterToggle'
 
-import type { CardState } from './cards'
 import { translate } from './utils'
-import { useAppSelector } from '../../app/hooks'
-import { selectSelectedCards } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
 interface CardFiltersProps {
-  onFiltersChanged: (filter: ((card: CardState) => boolean)) => void
+  priceRange: [number, number]
+  setPriceRange: (priceRange: [number, number]) => void
+  selections: string[]
+  setSelections: (selections: string[]) => void
+  showBuy: boolean
+  setShowBuy: (showBuy: boolean) => void
+  showReplace: boolean
+  setShowReplace: (showReplace: boolean) => void
+  showSoldOut: boolean
+  setShowSoldOut: (showSoldOut: boolean) => void
 }
 
-export default function CardFilters({ onFiltersChanged }: CardFiltersProps
+export default function CardFilters({
+  priceRange, setPriceRange,
+  selections, setSelections,
+  showBuy, setShowBuy,
+  showReplace, setShowReplace,
+  showSoldOut, setShowSoldOut,
+}: CardFiltersProps
 ) {
-  const selectedCards = useAppSelector(selectSelectedCards)
-
-  const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
-  const [selections, setSelections] = useState<string[]>([])
-  const [showBuy, setShowBuy] = useState(true)
-  const [showReplace, setShowReplace] = useState(true)
-  const [showSoldOut, setShowSoldOut] = useState(true)
-
   const options = [
     [
       'ability-score',
@@ -34,30 +38,6 @@ export default function CardFilters({ onFiltersChanged }: CardFiltersProps
       'armor',
     ]
   ]
-  
-  useEffect(() => {
-    const userFilter = (card: CardState) => {
-      const conflict = card.slot && selectedCards.find(c => c.slot === card.slot)
-      const isSoldOut = card.copiesAvailable === 0
-      const isReplace = !isSoldOut && conflict !== undefined
-      const isBuy = !isSoldOut && !isReplace
-
-      return (
-        (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
-        (selections.length === 0 ||
-          selections.includes(card.category) ||
-          (card.slot !== undefined && selections.includes(card.slot))
-        ) &&
-        (
-          (showBuy && isBuy) ||
-          (showReplace && isReplace) ||
-          (showSoldOut && isSoldOut)
-        )
-      )
-    }
-
-    onFiltersChanged(userFilter)  
-  }, [priceRange, selections, showBuy, showReplace, showSoldOut, selectedCards, onFiltersChanged])
 
   return (
     <Sheet className={style.rounded} variant="outlined">
