@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Accordion, AccordionDetails, AccordionSummary, Checkbox, List, ListItem, Sheet, Slider } from '@mui/joy'
+import { Accordion, AccordionDetails, AccordionSummary, List, Sheet, Slider } from '@mui/joy'
+
+import FilterToggle from './FilterToggle'
 
 import type { CardState } from './cards'
 import { translate } from './utils'
+import { useAppSelector } from '../../app/hooks'
+import { selectSelectedCards } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -12,8 +16,13 @@ interface CardFiltersProps {
 
 export default function CardFilters({ onFiltersChanged }: CardFiltersProps
 ) {
+  const selectedCards = useAppSelector(selectSelectedCards)
+
   const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
   const [selections, setSelections] = useState<string[]>([])
+  const [showBuy, setShowBuy] = useState(true)
+  const [showReplace, setShowReplace] = useState(true)
+  const [showSoldOut, setShowSoldOut] = useState(true)
 
   const options = [
     [
@@ -27,15 +36,28 @@ export default function CardFilters({ onFiltersChanged }: CardFiltersProps
   ]
   
   useEffect(() => {
-    const userFilter = (card: CardState) =>
-      (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
-      (selections.length === 0 ||
-        selections.includes(card.category) ||
-        (card.slot !== undefined && selections.includes(card.slot))
+    const userFilter = (card: CardState) => {
+      const conflict = card.slot && selectedCards.find(c => c.slot === card.slot)
+      const isSoldOut = card.copiesAvailable === 0
+      const isReplace = !isSoldOut && conflict !== undefined
+      const isBuy = !isSoldOut && !isReplace
+
+      return (
+        (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
+        (selections.length === 0 ||
+          selections.includes(card.category) ||
+          (card.slot !== undefined && selections.includes(card.slot))
+        ) &&
+        (
+          (showBuy && isBuy) ||
+          (showReplace && isReplace) ||
+          (showSoldOut && isSoldOut)
+        )
       )
+    }
 
     onFiltersChanged(userFilter)  
-  }, [priceRange, selections, onFiltersChanged])
+  }, [priceRange, selections, showBuy, showReplace, showSoldOut, selectedCards, onFiltersChanged])
 
   return (
     <Sheet className={style.rounded} variant="outlined">
@@ -46,35 +68,33 @@ export default function CardFilters({ onFiltersChanged }: CardFiltersProps
             {options.map((section, index) =>
               <List key={index} orientation="horizontal" wrap>
                 {section.map((option) =>
-                  <ListItem key={option} sx={{ margin: '0.2rem' }}>
-                    <Checkbox
-                      overlay
-                      disableIcon
-                      label={translate(option)}
-                      checked={selections.includes(option)}
-                      variant="soft"
-                      onChange={e =>
-                        setSelections(
-                          e.target.checked
-                            ? [...selections, option]
-                            : selections.filter(item => item !== option)
-                        )
-                      }
-                      slotProps={{
-                        action: ({ checked }) => ({
-                          sx: checked
-                            ? {
-                                border: '1px solid',
-                                borderColor: 'primary.500',
-                              }
-                            : {},
-                        }),
-                      }}
-                    />
-                  </ListItem>
+                  <FilterToggle
+                    key={option}
+                    label={translate(option)}
+                    checked={selections.includes(option)}
+                    onChange={e =>
+                      setSelections(e.target.checked
+                        ? [...selections, option]
+                        : selections.filter(item => item !== option)
+                      )
+                    } />
                 )}
               </List>
             )}
+            <List orientation="horizontal" wrap>
+              <FilterToggle
+                label="Buy"
+                checked={showBuy}
+                onChange={() => setShowBuy(!showBuy)} />
+              <FilterToggle
+                label="Replace"
+                checked={showReplace}
+                onChange={() => setShowReplace(!showReplace)} />
+              <FilterToggle
+                label="Sold Out"
+                checked={showSoldOut}
+                onChange={() => setShowSoldOut(!showSoldOut)} />
+            </List>
           </List>
           <div style={{ margin: '1.2rem 1.5rem 1rem 1.5rem' }}>
             <Slider
