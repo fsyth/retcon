@@ -11,11 +11,11 @@ import style from './CharacterBuilder.module.css'
 export default function CharacterStats() {
   const [slotToShow, setSlotToShow] = useState<Slot | null>(null)
 
-  const showCardsForSlot = (mutuallyExclusive: Slot) => {
+  const showCardsForSlot = (slot: Slot) => {
     if (slotToShow !== null)
       setSlotToShow(null)
     else
-      setSlotToShow(mutuallyExclusive)
+      setSlotToShow(slot)
   }
 
   return (

@@ -24,8 +24,7 @@ export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonus
   const bonus = character[skill]
 
   const selectedCards = useAppSelector(selectSelectedCards)
-  const slotName = skill.endsWith('Save') ? `${ability}-save` : `${skill}-bonus`
-  const cardForSlot = selectedCards.find(card => card.slot === slotName)
+  const cardForSlot = selectedCards.find(card => card.slot === slot)
 
   const mod = modifier(score) + bonus
   const formattedMod = formatModifier(mod)

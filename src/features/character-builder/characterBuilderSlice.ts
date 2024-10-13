@@ -1,8 +1,9 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { RootState } from '../../app/store';
-import { allCards, type CardState } from './cards';
-import { initialCharacter, type CharacterState } from './character';
+import { RootState } from '../../app/store'
+import { allCards, type CardState } from './cards'
+import { initialCharacter, type CharacterState } from './character'
+import { decodeBigIntStringToBools, encodeBoolsToBigIntString } from './utils'
 
 export interface CharacterBuilderState {
   pointBudget: number
@@ -58,10 +59,19 @@ export const characterBuilderSlice = createSlice({
     setPointBudget: (state, action: PayloadAction<number>) => {
       state.pointBudget = action.payload
     },
-  },
-});
+    decodeStateFromUri: (state, action: PayloadAction<string>) => {
+      const { allCards } = state
+      const bools = decodeBigIntStringToBools(action.payload, allCards.length)
 
-export const { buyCard, sellCard, setPointBudget } = characterBuilderSlice.actions;
+      for (let i = 0; i < allCards.length; ++i) {
+        if (bools[i])
+          characterBuilderSlice.caseReducers.buyCard(state, { type: 'buyCard', payload: allCards[i].id })
+      }
+    },
+  },
+})
+
+export const { buyCard, sellCard, setPointBudget, decodeStateFromUri } = characterBuilderSlice.actions
 
 export const selectSelectedCards = (state: RootState) => state.characterBuilder.selectedCards
 
@@ -87,4 +97,10 @@ export const selectCharacter = createSelector([selectSelectedCards], selectedCar
   return character as CharacterState
 })
 
-export default characterBuilderSlice.reducer;
+export const selectEncodedUri = createSelector(
+  [selectAllCards, selectSelectedCards, selectPointBudget],
+  (allCards, selectedCards) =>
+    encodeBoolsToBigIntString(allCards.map(card => selectedCards.includes(card)))
+)
+
+export default characterBuilderSlice.reducer

@@ -6,6 +6,32 @@ export function formatModifier(mod: number) {
   return new Intl.NumberFormat('en-US', {signDisplay: 'always'}).format(mod)
 }
 
+const encodingRadix = 36 // range [2, 36]
+
+export function encodeBoolsToBigIntString(bools: boolean[]) {
+  let big = BigInt(0)
+
+  for (let i = 0; i < bools.length; ++i)
+    big |= BigInt(bools[i]) << BigInt(i)
+
+  return big.toString(encodingRadix)
+}
+
+export function decodeBigIntStringToBools(encodedString: string, length: number): boolean[] {
+  const bigIntValue = parseBigInt(encodedString, encodingRadix)
+  const boolArray: boolean[] = []
+
+  for (let i = 0; i < length; ++i)
+    boolArray.push(Boolean((bigIntValue >> BigInt(i)) & BigInt(1)))
+
+  return boolArray
+}
+
+export function parseBigInt(str: string, radix: number) {
+  return str.split('').reduce((acc, char) =>
+    acc * BigInt(radix) + BigInt(parseInt(char, radix)), BigInt(0))
+}
+
 export function translate(key: string) {
   return key in translations
     ? translations[key]
