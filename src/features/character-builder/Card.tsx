@@ -40,7 +40,7 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
       </div>
     )
 
-  const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === card.slot)
+  const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === slot)
 
   const missingRequirements = (requires && addRequirements &&
     getMissingRequirements(character, requires, addRequirements)) || []
@@ -52,7 +52,10 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
   return (
     <div className={style.featureCard}>
       <p>
-        <strong>{pointCost} RP</strong>
+        {conflict && conflict.pointCost !== 0
+          ? <><s>{pointCost} RP</s><strong>{pointCost - conflict.pointCost} RP</strong></>
+          : <strong>{pointCost} RP</strong>
+        }
         {missingRequirements.length > 0 &&
           <Tooltip
             title={

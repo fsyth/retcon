@@ -81,13 +81,13 @@ export default function CardFilters({
               value={priceRange}
               onChange={(_, newValue) => setPriceRange(newValue as [number, number])}
               step={1}
-              min={-7}
-              max={17}
+              min={-24}
+              max={24}
               valueLabelDisplay="auto"
               marks={[
-                { value: -7, label: '-7 RP' },
+                { value: -24, label: '-24 RP' },
                 { value: 0,  label: '0 RP'  },
-                { value: 17, label: '17 RP' },
+                { value: 24, label: '24 RP' },
               ]}
             />
           </div>

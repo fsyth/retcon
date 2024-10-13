@@ -18,7 +18,7 @@ interface CardShopProps {
 export default function CardShop({
   filter, showConflictTooltips, userFilters, groupBy
 }: CardShopProps) {
-  const [priceRange, setPriceRange] = useState<[number, number]>([-7, 17])
+  const [priceRange, setPriceRange] = useState<[number, number]>([-24, 24])
   const [selections, setSelections] = useState<string[]>([])
   const [showBuy, setShowBuy] = useState(false)
   const [showReplace, setShowReplace] = useState(false)
@@ -28,12 +28,13 @@ export default function CardShop({
 
   const userFilter = (card: CardState) => {
     const conflict = card.slot && selectedCards.find(c => c.slot === card.slot)
+    const cost = conflict ? card.pointCost - conflict.pointCost : card.pointCost
     const isSoldOut = card.copiesAvailable === 0
     const isReplace = !isSoldOut && conflict !== undefined
     const isBuy = !isSoldOut && !isReplace
 
     return (
-      (priceRange[0] <= card.pointCost && card.pointCost <= priceRange[1]) &&
+      (priceRange[0] <= cost && cost <= priceRange[1]) &&
       (
         selections.length === 0 ||
         selections.includes(card.category) ||
