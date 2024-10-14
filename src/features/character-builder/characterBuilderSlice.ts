@@ -60,12 +60,23 @@ export const characterBuilderSlice = createSlice({
       state.pointBudget = action.payload
     },
     decodeStateFromUri: (state, action: PayloadAction<string>) => {
+      if (action.payload === '')
+        return
+
       const { allCards } = state
-      const bools = decodeBigIntStringToBools(action.payload, allCards.length)
+
+      const [pointBudgetToken, selectionsToken] = action.payload.split(tokenSeparator)
+
+      const pointBudget = parseInt(pointBudgetToken, 36)
+      const bools = decodeBigIntStringToBools(selectionsToken, allCards.length)
+
+      characterBuilderSlice.caseReducers.setPointBudget(
+        state, { type: 'setPointBudget', payload: pointBudget })
 
       for (let i = 0; i < allCards.length; ++i) {
         if (bools[i])
-          characterBuilderSlice.caseReducers.buyCard(state, { type: 'buyCard', payload: allCards[i].id })
+          characterBuilderSlice.caseReducers.buyCard(
+            state, { type: 'buyCard', payload: allCards[i].id })
       }
     },
   },
@@ -97,10 +108,14 @@ export const selectCharacter = createSelector([selectSelectedCards], selectedCar
   return character as CharacterState
 })
 
+const tokenSeparator = '+'
+
 export const selectEncodedUri = createSelector(
   [selectAllCards, selectSelectedCards, selectPointBudget],
-  (allCards, selectedCards) =>
+  (allCards, selectedCards, pointBudget) => [
+    pointBudget.toString(36),
     encodeBoolsToBigIntString(allCards.map(card => selectedCards.includes(card)))
+  ].join(tokenSeparator)
 )
 
 export default characterBuilderSlice.reducer

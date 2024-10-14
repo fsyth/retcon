@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@mui/joy'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -12,10 +12,16 @@ interface PointBudgetProps {
 
 export default function PointBudget({sticky}: PointBudgetProps) {
   const dispatch = useAppDispatch()
-  const pointBudget = useAppSelector(selectPointBudget)
   const pointsSpent = useAppSelector(selectPointsSpent)
+  const pointBudget = useAppSelector(selectPointBudget)
   
+  // Local state of the input is a string and not necessarily a valid number
   const [inputState, setInputState] = useState(pointBudget.toString())
+
+  // Sync local state with redux state
+  useEffect(() => {
+    setInputState(pointBudget.toString())
+  }, [pointBudget])
 
   let className = style.pointBudget
   if (sticky)
@@ -42,12 +48,7 @@ export default function PointBudget({sticky}: PointBudgetProps) {
           if (!isNaN(float))
             dispatch(setPointBudget(float))
         }}
-        onBlur={() => {
-          if (inputState === '') {
-            setInputState('0')
-            dispatch(setPointBudget(0))
-          }
-        }}
+        onBlur={() => setInputState(pointBudget.toString())}
         sx={{
           '--Input-decoratorColor': 'inherit'
         }}

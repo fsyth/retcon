@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import PointBudget from './PointBudget'
 import CharacterSheet from './CharacterSheet'
@@ -14,18 +14,21 @@ export default function CharacterBuilder() {
   const dispatch = useAppDispatch()
   const uri = useAppSelector(selectEncodedUri)
 
+  const [isLoaded, setIsLoaded] = useState(false)
+
   // Read URI on first load
   useEffect(() => {
     const href = window.location.href
     const uri = href.slice(href.lastIndexOf('/') + 1)
     dispatch(decodeStateFromUri(uri))
-  }, [dispatch])
+    setIsLoaded(true)
+  }, [dispatch, setIsLoaded])
 
   // Write URI on state change
   useEffect(() => {
-    window.history.replaceState(null, '', uri)
-  }, [uri])
-
+    if (isLoaded)
+      window.history.replaceState(null, '', uri)
+  }, [uri, isLoaded])
 
   return (
     <div className={styles.characterBuilder}>
