@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Tooltip } from '@mui/joy'
 
 import { getMissingRequirements } from './character'
+import { formatModifier } from './utils'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { buyCard, sellCard, selectCardById, selectSelectedCards, selectCharacter } from './characterBuilderSlice'
 
@@ -39,6 +40,10 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
         </Tooltip>
       </div>
     )
+
+  const formattedDescription = description
+    .replace('{prof}', formatModifier(character.prof))
+    .replace('{expertise}', formatModifier(2 * character.prof))
 
   const conflict = canBuy && slot && selectedCards.find(sc => sc.slot === slot)
 
@@ -101,7 +106,7 @@ export default function Card({ id, canBuy, canSell, showConflictTooltip }: CardP
         }
       </p>
       <p><i>{flavor}</i></p>
-      <p>{description}</p>
+      <p>{formattedDescription}</p>
     </div>
   )
 }

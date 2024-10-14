@@ -12,6 +12,9 @@ export type Skill =
   'performance' | 'persuasion' | 'religion' | 'sleightOfHand' | 'stealth' | 'survival'
 
 export interface CharacterState extends CardEffect {
+  level: number
+  prof: number
+
   str: number
   dex: number
   con: number
@@ -72,6 +75,9 @@ export interface CharacterState extends CardEffect {
 }
 
 export const initialCharacter: CharacterState = Object.freeze({
+  level: 1,
+  prof: 2,
+
   str: 10,
   dex: 10,
   con: 10,

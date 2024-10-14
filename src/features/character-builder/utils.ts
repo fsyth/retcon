@@ -39,6 +39,7 @@ export function translate(key: string) {
 }
 
 const translations: { [key: string]: string } = {
+  level: 'Level',
   strSave: 'Save',
   dexSave: 'Save',
   conSave: 'Save',

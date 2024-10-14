@@ -30,6 +30,7 @@ export default function CardFilters({
 ) {
   const options = [
     [
+      'level',
       'ability-score',
       'saving-throw',
       'skill',

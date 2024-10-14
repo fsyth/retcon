@@ -21,7 +21,7 @@ interface SkillBonusProps {
 export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonusProps) {
   const character = useAppSelector(selectCharacter)
   const score = character[ability]
-  const bonus = character[skill]
+  const bonus = character[skill] * character.prof
 
   const selectedCards = useAppSelector(selectSelectedCards)
   const cardForSlot = selectedCards.find(card => card.slot === slot)
