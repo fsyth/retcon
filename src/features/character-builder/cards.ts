@@ -56,6 +56,7 @@ export interface CardEffect {
 
   baseArmorClass?: number
   armorMaxDexBonus?: number
+  armorAddDex?: boolean
   armorAddCon?: boolean
   armorAddWis?: boolean
 }
@@ -1359,7 +1360,7 @@ export const allCards: CardState[] = [
     pointCost: 2,
     flavor: "I have a tough hide.",
     description: 'Natural armor (12+Con AC)',
-    effect: { baseArmorClass: 12, armorMaxDexBonus: 0, armorAddCon: true },
+    effect: { baseArmorClass: 12, armorAddDex: false, armorAddCon: true },
     copiesAvailable: 1,
     category: 'armor',
     slot: 'base-armor',
@@ -1369,7 +1370,7 @@ export const allCards: CardState[] = [
     pointCost: 4,
     flavor: "Bounces right off my carapace.",
     description: 'Natural armor (17 AC)',
-    effect: { baseArmorClass: 17, armorMaxDexBonus: 0 },
+    effect: { baseArmorClass: 17, armorAddDex: false },
     copiesAvailable: 1,
     category: 'armor',
     slot: 'base-armor',
@@ -1404,7 +1405,7 @@ export const allCards: CardState[] = [
     pointCost: 1,
     flavor: "This thing weighs a ton.",
     description: 'Plate armor (18 AC)',
-    effect: { baseArmorClass: 18, armorMaxDexBonus: 0 },
+    effect: { baseArmorClass: 18, armorAddDex: false },
     copiesAvailable: 1,
     category: 'armor',
     slot: 'base-armor',

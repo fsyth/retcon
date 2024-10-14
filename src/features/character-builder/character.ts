@@ -56,6 +56,7 @@ export interface CharacterState extends CardEffect {
 
   baseArmorClass: number
   armorMaxDexBonus: number
+  armorAddDex: boolean
   armorAddCon: boolean
   armorAddWis: boolean
 
@@ -119,6 +120,7 @@ export const initialCharacter: CharacterState = Object.freeze({
 
   baseArmorClass: 10,
   armorMaxDexBonus: Infinity,
+  armorAddDex: true,
   armorAddCon: false,
   armorAddWis: false,
 })

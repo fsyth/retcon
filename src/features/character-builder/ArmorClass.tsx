@@ -29,12 +29,12 @@ export default function ArmorClass() {
 
   const {
     dex, con, wis, baseArmorClass, armorMaxDexBonus,
-    armorAddCon, armorAddWis, armorProf, shieldProf
+    armorAddDex, armorAddCon, armorAddWis, armorProf, shieldProf
   } = character
 
   const ac =
     baseArmorClass +
-    Math.min(modifier(dex), armorMaxDexBonus) +
+    (armorAddDex ? Math.min(modifier(dex), armorMaxDexBonus) : 0) +
     (armorAddCon ? modifier(con) : 0) +
     (armorAddWis ? modifier(wis) : 0)
 
