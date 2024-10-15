@@ -5,6 +5,7 @@ import { RadioButtonChecked, RadioButtonUnchecked, ShieldOutlined } from '@mui/i
 import Card from './Card'
 import ModalShop from './ModalShop'
 
+import type { CardState } from './cards'
 import { modifier } from './utils'
 import { useAppSelector } from '../../app/hooks'
 import { selectCharacter, selectSelectedCards } from './characterBuilderSlice'
@@ -23,9 +24,12 @@ export default function ArmorClass() {
   const [showModal, setShowModal] = useState(false)
 
   const character = useAppSelector(selectCharacter)
-
   const selectedCards = useAppSelector(selectSelectedCards)
-  const cardsForCategory = selectedCards.filter(card => card.category === 'armor')
+
+  const filter = (card: CardState) =>
+    ['armor', 'equipped-armor'].includes(card.category)
+
+  const cardsForCategory = selectedCards.filter(filter)
 
   const {
     dex, con, wis, baseArmorClass, armorMaxDexBonus,
@@ -69,7 +73,7 @@ export default function ArmorClass() {
       <ModalShop
         open={showModal}
         onClose={() => setShowModal(false)}
-        filter={card => ['armor', 'equipped-armor'].includes(card.category)}
+        filter={filter}
         groupBy={card => card.slot || 'misc'} />
     </div>
   )

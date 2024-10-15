@@ -69,6 +69,7 @@ const translations: { [key: string]: string } = {
   'saving-throw': 'Saving throw',
   'skill': 'Skill',
   'expertise': 'Expertise',
+  'hit-points': 'Hit Points',
   'weapons': 'Weapons',
   'armor': 'Armor',
   'equipped-armor': 'Armor sets',

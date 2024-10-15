@@ -45,6 +45,8 @@ export interface CardEffect {
   stealth?: number
   survival?: number
 
+  hitDie?: number
+
   weaponsProf?: WeaponsProf
   firearmsProf?: boolean
 
@@ -72,7 +74,7 @@ export enum WeaponsProf {
 }
 
 export type Category =
-  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'weapons' | 'armor'
+  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'hit-points' | 'weapons' | 'armor'
 
 export type Slot =
   'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
@@ -82,7 +84,7 @@ export type Slot =
   'investigation-bonus' | 'medicine-bonus' | 'nature-bonus' | 'perception-bonus' |
   'performance-bonus' | 'persuasion-bonus' | 'religion-bonus' | 'sleight-of-hand-bonus' |
   'stealth-bonus' | 'survival-bonus' |
-  'weapons-prof' | 'armor-prof' | 'shield-prof' | 'base-armor' | 'equipped-shield'
+  'hit-die' | 'weapons-prof' | 'armor-prof' | 'shield-prof' | 'base-armor' | 'equipped-shield'
 
 // These will be multiplied by the proficiency bonus when building the character.
 // Also, '{prof}' and '{expertise}' tokens in strings will be replaced when rendering.
@@ -1058,6 +1060,37 @@ export const allCards: CardState[] = [
     copiesAvailable: 1,
     category: 'expertise',
     slot: 'survival-bonus',
+  },
+  // Hit points
+  {
+    id: 'hit-die-6',
+    pointCost: -3,
+    flavor: "I put on my robe and wizard hat.",
+    description: 'Hit Point Die: d6',
+    effect: { hitDie: 6 },
+    copiesAvailable: 1,
+    category: 'hit-points',
+    slot: 'hit-die',
+  },
+  {
+    id: 'hit-die-10',
+    pointCost: 3,
+    flavor: "I'm fighty.",
+    description: 'Hit Point Die: d10',
+    effect: { hitDie: 10 },
+    copiesAvailable: 1,
+    category: 'hit-points',
+    slot: 'hit-die',
+  },
+  {
+    id: 'hit-die-12',
+    pointCost: 6,
+    flavor: "An outrageous amount of health.",
+    description: 'Hit Point Die: d12',
+    effect: { hitDie: 12 },
+    copiesAvailable: 1,
+    category: 'hit-points',
+    slot: 'hit-die',
   },
   // Weapon and armor proficiency
   {

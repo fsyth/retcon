@@ -48,6 +48,8 @@ export interface CharacterState extends CardEffect {
   stealth: number
   survival: number
 
+  hitDie: number
+
   weaponsProf: WeaponsProf
   firearmsProf: boolean
 
@@ -111,6 +113,8 @@ export const initialCharacter: CharacterState = Object.freeze({
   sleightOfHand: 0,
   stealth: 0,
   survival: 0,
+
+  hitDie: 8,
 
   weaponsProf: WeaponsProf.None,
   firearmsProf: false,

@@ -35,6 +35,7 @@ export default function CardFilters({
       'saving-throw',
       'skill',
       'expertise',
+      'hit-points',
       'weapons',
       'armor',
     ]
