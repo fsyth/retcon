@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import PointBudget from './PointBudget'
+import AppHeader from './AppHeader'
 import CharacterSheet from './CharacterSheet'
 import CardInventory from './CardInventory'
 import CardShop from './CardShop'
@@ -31,12 +31,13 @@ export default function CharacterBuilder() {
   }, [uri, isLoaded])
 
   return (
-    <div className={styles.characterBuilder}>
-      <h1>Retcon Character Builder</h1>
-      <PointBudget sticky />
-      <CharacterSheet />
-      <CardInventory />
-      <CardShop groupBy={card => card.category} userFilters showConflictTooltips/>
-    </div>
+    <>
+      <AppHeader />
+      <div className={styles.characterBuilder}>
+        <CharacterSheet />
+        <CardInventory />
+        <CardShop groupBy={card => card.category} userFilters showConflictTooltips/>
+      </div>
+    </>
   )
 }

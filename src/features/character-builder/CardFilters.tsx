@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, List, Sheet, Slider } fr
 
 import FilterToggle from './FilterToggle'
 
+import type { Category } from './cards'
 import { translate } from './utils'
 
 import style from './CharacterBuilder.module.css'
@@ -28,9 +29,8 @@ export default function CardFilters({
   showSoldOut, setShowSoldOut,
 }: CardFiltersProps
 ) {
-  const options = [
+  const options: Category[][] = [
     [
-      'level',
       'ability-score',
       'saving-throw',
       'skill',

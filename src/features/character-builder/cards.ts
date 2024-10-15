@@ -12,9 +12,6 @@ export interface CardState {
 }
 
 export interface CardEffect {
-  level?: number
-  prof?: number
-
   str?: number
   dex?: number
   con?: number
@@ -75,10 +72,10 @@ export enum WeaponsProf {
 }
 
 export type Category =
-  'level' | 'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'weapons' | 'armor'
+  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'weapons' | 'armor'
 
 export type Slot =
-  'level'| 'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
+  'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
   'str-save' | 'dex-save' | 'con-save' | 'int-save' | 'wis-save' | 'cha-save' |
   'acrobatics-bonus' | 'animal-handling-bonus' | 'arcana-bonus' | 'athletics-bonus' |
   'deception-bonus' | 'history-bonus' | 'insight-bonus' | 'intimidation-bonus' |
@@ -93,197 +90,6 @@ const proficiency = 1
 const expertise = 2
 
 export const allCards: CardState[] = [
-  // Level
-  {
-    id: 'level-2',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '2nd-level character.',
-    effect: { level: 2, prof: 2 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-3',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '3rd-level character.',
-    effect: { level: 3, prof: 2 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-4',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '4th-level character.',
-    effect: { level: 4, prof: 2 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-5',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '5th-level character.',
-    effect: { level: 5, prof: 3 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-6',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '6th-level character.',
-    effect: { level: 6, prof: 3 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-7',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '7th-level character.',
-    effect: { level: 7, prof: 3 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-8',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '8th-level character.',
-    effect: { level: 8, prof: 3 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-9',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '9th-level character.',
-    effect: { level: 9, prof: 4 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-10',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '10th-level character.',
-    effect: { level: 10, prof: 4 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-11',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '11th-level character.',
-    effect: { level: 11, prof: 4 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-12',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '12th-level character.',
-    effect: { level: 12, prof: 4 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-13',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '13th-level character.',
-    effect: { level: 13, prof: 5 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-14',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '14th-level character.',
-    effect: { level: 14, prof: 5 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-15',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '15th-level character.',
-    effect: { level: 15, prof: 5 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-16',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '16th-level character.',
-    effect: { level: 16, prof: 5 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-17',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '17th-level character.',
-    effect: { level: 17, prof: 6 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-18',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '18th-level character.',
-    effect: { level: 18, prof: 6 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-19',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '19th-level character.',
-    effect: { level: 19, prof: 6 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
-  {
-    id: 'level-20',
-    pointCost: 0,
-    flavor: "Ask your DM.",
-    description: '20th-level character.',
-    effect: { level: 20, prof: 6 },
-    copiesAvailable: 1,
-    category: 'level',
-    slot: 'level',
-  },
   // Strength ability score
   {
     id: 'str-20',
