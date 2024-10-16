@@ -70,6 +70,8 @@ const translations: { [key: string]: string } = {
   'skill': 'Skill',
   'expertise': 'Expertise',
   'hit-points': 'Hit points',
+  'movement': 'Movement',
+  'walk-speed': 'Walking speed',
   'weapons': 'Weapons',
   'armor': 'Armor',
   'equipped-armor': 'Armor sets',
@@ -100,4 +102,5 @@ const translations: { [key: string]: string } = {
   'sleight-of-hand-bonus': 'Sleight of hand',
   'stealth-bonus': 'Stealth',
   'survival-bonus': 'Survival',
+  'misc': 'Miscellaneous',
 }

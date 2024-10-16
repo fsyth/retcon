@@ -50,6 +50,11 @@ export interface CharacterState extends CardEffect {
 
   hitDie: number
 
+  speed: number
+  canSwim: boolean
+  canClimb: boolean
+  canFly: boolean
+
   weaponsProf: WeaponsProf
   firearmsProf: boolean
 
@@ -62,18 +67,6 @@ export interface CharacterState extends CardEffect {
   armorAddCon: boolean
   armorAddWis: boolean
 
-  //hp: number
-  //hitDie: number
-  //ac: number
-  //speed: number
-  //prof: number
-  //skills... 0|1|2
-  //saves... boolean
-  //simpleWeapons: boolean
-  //martialWeapons: boolean
-  //lightArmor: boolean
-  //mediumArmor: boolean
-  //heavyArmor: boolean
   //inventory...
 }
 
@@ -115,6 +108,11 @@ export const initialCharacter: CharacterState = Object.freeze({
   survival: 0,
 
   hitDie: 8,
+
+  speed: 30,
+  canSwim: false,
+  canClimb: false,
+  canFly: false,
 
   weaponsProf: WeaponsProf.None,
   firearmsProf: false,

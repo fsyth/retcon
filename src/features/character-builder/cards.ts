@@ -47,6 +47,11 @@ export interface CardEffect {
 
   hitDie?: number
 
+  speed?: number
+  canSwim?: boolean
+  canClimb?: boolean
+  canFly?: boolean
+
   weaponsProf?: WeaponsProf
   firearmsProf?: boolean
 
@@ -74,7 +79,8 @@ export enum WeaponsProf {
 }
 
 export type Category =
-  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'hit-points' | 'weapons' | 'armor'
+  'ability-score' | 'saving-throw' | 'skill' | 'expertise' | 'hit-points' | 'movement' |
+  'weapons' | 'armor'
 
 export type Slot =
   'str-score' | 'dex-score' | 'con-score' | 'int-score' | 'wis-score' | 'cha-score' |
@@ -84,7 +90,8 @@ export type Slot =
   'investigation-bonus' | 'medicine-bonus' | 'nature-bonus' | 'perception-bonus' |
   'performance-bonus' | 'persuasion-bonus' | 'religion-bonus' | 'sleight-of-hand-bonus' |
   'stealth-bonus' | 'survival-bonus' |
-  'hit-die' | 'weapons-prof' | 'armor-prof' | 'shield-prof' | 'base-armor' | 'equipped-shield'
+  'hit-die' | 'walk-speed' |
+  'weapons-prof' | 'armor-prof' | 'shield-prof' | 'base-armor' | 'equipped-shield'
 
 // These will be multiplied by the proficiency bonus when building the character.
 // Also, '{prof}' and '{expertise}' tokens in strings will be replaced when rendering.
@@ -1091,6 +1098,64 @@ export const allCards: CardState[] = [
     copiesAvailable: 1,
     category: 'hit-points',
     slot: 'hit-die',
+  },
+  // Movement
+  {
+    id: 'speed-25',
+    pointCost: -2,
+    flavor: "I've only got little legs.",
+    description: 'Decrease speed (25 feet)',
+    effect: { speed: 25 },
+    copiesAvailable: 1,
+    category: 'movement',
+    slot: 'walk-speed',
+  },
+  {
+    id: 'speed-35',
+    pointCost: 2,
+    flavor: "Fleet of foot.",
+    description: 'Increase speed (35 feet)',
+    effect: { speed: 35 },
+    copiesAvailable: 1,
+    category: 'movement',
+    slot: 'walk-speed',
+  },
+  {
+    id: 'speed-40',
+    pointCost: 4,
+    flavor: "My lower half is a horse.",
+    description: 'Increase speed (40 feet)',
+    effect: { speed: 40 },
+    copiesAvailable: 1,
+    category: 'movement',
+    slot: 'walk-speed',
+  },
+  {
+    id: 'swim-speed',
+    pointCost: 1,
+    flavor: "Just keep swimming.",
+    description: 'Swim equal to your walking speed.',
+    effect: { canSwim: true },
+    copiesAvailable: 1,
+    category: 'movement',
+  },
+  {
+    id: 'climb-speed',
+    pointCost: 3,
+    flavor: "Parkour.",
+    description: 'Climb equal to your walking speed.',
+    effect: { canClimb: true },
+    copiesAvailable: 1,
+    category: 'movement',
+  },
+  {
+    id: 'fly-speed',
+    pointCost: 6,
+    flavor: "Throw yourself at the ground and miss.",
+    description: 'Fly equal to your walking speed.',
+    effect: { canFly: true },
+    copiesAvailable: 1,
+    category: 'movement',
   },
   // Weapon and armor proficiency
   {
