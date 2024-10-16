@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-import { Tooltip } from '@mui/joy'
+import React from 'react'
 import { RadioButtonChecked, RadioButtonUnchecked, ShieldOutlined } from '@mui/icons-material'
 
-import Card from './Card'
-import ModalShop from './ModalShop'
+import SlotButton from './SlotButton'
 
-import type { CardState } from './cards'
 import { modifier } from './utils'
 import { useAppSelector } from '../../app/hooks'
-import { selectCharacter, selectSelectedCards } from './characterBuilderSlice'
+import { selectCharacter } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -21,15 +18,7 @@ export function ShieldChecked() {
 }
 
 export default function ArmorClass() {
-  const [showModal, setShowModal] = useState(false)
-
   const character = useAppSelector(selectCharacter)
-  const selectedCards = useAppSelector(selectSelectedCards)
-
-  const filter = (card: CardState) =>
-    ['armor', 'equipped-armor'].includes(card.category)
-
-  const cardsForCategory = selectedCards.filter(filter)
 
   const {
     dex, con, wis, baseArmorClass, armorMaxDexBonus,
@@ -45,37 +34,19 @@ export default function ArmorClass() {
   const armorPips = armorProf as number
 
   return (
-    <div>
-      <Tooltip
-        title={
-          cardsForCategory.length > 0 &&
-          cardsForCategory.map(card =>
-            <Card key={card.id} id={card.id} canSell />
-          )
-        }
-        placement="right"
-        arrow
-        variant="outlined"
-      >
-        <div className={style.abilityBox} onClick={() => setShowModal(true)}>
-          <p className={style.ability}>AC</p>
-          <p className={style.modifier}>{ac}</p>
-          <p className={style.pips}>
-            {armorPips > 0 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
-            {armorPips > 1 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
-            {armorPips > 2 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
-          </p>
-          <p className={style.pips}>
-            {shieldProf ? <ShieldChecked /> : <ShieldOutlined /> }
-          </p>
-        </div>
-      </Tooltip>
-      <ModalShop
-        open={showModal}
-        onClose={() => setShowModal(false)}
-        filter={filter}
-        groupBy={card => card.slot || 'misc'} />
-    </div>
+    <SlotButton filter={card => ['armor', 'equipped-armor'].includes(card.category)}>
+      <div className={style.abilityBox}>
+        <p className={style.ability}>AC</p>
+        <p className={style.modifier}>{ac}</p>
+        <p className={style.pips}>
+          {armorPips > 0 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
+          {armorPips > 1 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
+          {armorPips > 2 ? <RadioButtonChecked /> : <RadioButtonUnchecked />}
+        </p>
+        <p className={style.pips}>
+          {shieldProf ? <ShieldChecked /> : <ShieldOutlined /> }
+        </p>
+      </div>
+    </SlotButton>
   )
 }
-

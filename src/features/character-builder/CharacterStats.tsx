@@ -1,187 +1,141 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import AbilityScore from './AbilityScore'
 import SkillBonus from './SkillBonus'
-import ModalShop from './ModalShop'
-
-import type { Slot } from './cards'
 
 import style from './CharacterBuilder.module.css'
 
 export default function CharacterStats() {
-  const [slotToShow, setSlotToShow] = useState<Slot | null>(null)
-
-  const showCardsForSlot = (slot: Slot) => {
-    if (slotToShow !== null)
-      setSlotToShow(null)
-    else
-      setSlotToShow(slot)
-  }
-
   return (
     <div>
       <div className={style.abilityGrid}>
         <div>
           <AbilityScore
             ability='str'
-            slot='str-score'
-            onClick={showCardsForSlot} />
+            slot='str-score'/>
           <SkillBonus
             ability='str'
             skill='strSave'
-            slot='str-save'
-            onClick={showCardsForSlot} />
+            slot='str-save' />
           <SkillBonus
             ability='str'
             skill='athletics'
-            slot='athletics-bonus'
-            onClick={showCardsForSlot} />
+            slot='athletics-bonus' />
         </div>
         <div>
           <AbilityScore
             ability='dex'
-            slot='dex-score'
-            onClick={showCardsForSlot} />
+            slot='dex-score' />
           <SkillBonus
             ability='dex'
             skill='dexSave'
-            slot='dex-save'
-            onClick={showCardsForSlot} />
+            slot='dex-save' />
           <SkillBonus
             ability='dex'
             skill='acrobatics'
-            slot='acrobatics-bonus'
-            onClick={showCardsForSlot} />
+            slot='acrobatics-bonus' />
           <SkillBonus
             ability='dex'
             skill='sleightOfHand'
-            slot='sleight-of-hand-bonus'
-            onClick={showCardsForSlot} />
+            slot='sleight-of-hand-bonus' />
           <SkillBonus
             ability='dex'
             skill='stealth'
-            slot='stealth-bonus'
-            onClick={showCardsForSlot} />
+            slot='stealth-bonus' />
         </div>
         <div>
           <AbilityScore
             ability='con'
-            slot='con-score'
-            onClick={showCardsForSlot} />
+            slot='con-score' />
           <SkillBonus
             ability='con'
             skill='conSave'
-            slot='con-save'
-            onClick={showCardsForSlot} />
+            slot='con-save' />
         </div>
         <div>
           <AbilityScore
             ability='int'
-            slot='int-score'
-            onClick={showCardsForSlot} />
+            slot='int-score' />
           <SkillBonus
             ability='int'
             skill='intSave'
-            slot='int-save'
-            onClick={showCardsForSlot} />
+            slot='int-save' />
           <SkillBonus
             ability='int'
             skill='arcana'
-            slot='arcana-bonus'
-            onClick={showCardsForSlot} />
+            slot='arcana-bonus' />
           <SkillBonus
             ability='int'
             skill='history'
-            slot='history-bonus'
-            onClick={showCardsForSlot} />
+            slot='history-bonus' />
           <SkillBonus
             ability='int'
             skill='investigation'
-            slot='investigation-bonus'
-            onClick={showCardsForSlot} />
+            slot='investigation-bonus' />
           <SkillBonus
             ability='int'
             skill='nature'
-            slot='nature-bonus'
-            onClick={showCardsForSlot} />
+            slot='nature-bonus' />
           <SkillBonus
             ability='int'
             skill='religion'
-            slot='religion-bonus'
-            onClick={showCardsForSlot} />
+            slot='religion-bonus' />
         </div>
         <div>
           <AbilityScore
             ability='wis'
-            slot='wis-score'
-            onClick={showCardsForSlot} />
+            slot='wis-score' />
           <SkillBonus
             ability='wis'
             skill='wisSave'
-            slot='wis-save'
-            onClick={showCardsForSlot} />
+            slot='wis-save' />
           <SkillBonus
             ability='wis'
             skill='animalHandling'
-            slot='animal-handling-bonus'
-            onClick={showCardsForSlot} />
+            slot='animal-handling-bonus' />
           <SkillBonus
             ability='wis'
             skill='insight'
-            slot='insight-bonus'
-            onClick={showCardsForSlot} />
+            slot='insight-bonus' />
           <SkillBonus
             ability='wis'
             skill='medicine'
-            slot='medicine-bonus'
-            onClick={showCardsForSlot} />
+            slot='medicine-bonus' />
           <SkillBonus
             ability='wis'
             skill='perception'
-            slot='perception-bonus'
-            onClick={showCardsForSlot} />
+            slot='perception-bonus' />
           <SkillBonus
             ability='wis'
             skill='survival'
-            slot='survival-bonus'
-            onClick={showCardsForSlot} />
+            slot='survival-bonus' />
         </div>
         <div>
           <AbilityScore
             ability='cha'
-            slot='cha-score'
-            onClick={showCardsForSlot} />
+            slot='cha-score' />
           <SkillBonus
             ability='cha'
             skill='chaSave'
-            slot='cha-save' 
-            onClick={showCardsForSlot} />
+            slot='cha-save' />
           <SkillBonus
             ability='cha'
             skill='deception'
-            slot='deception-bonus'
-            onClick={showCardsForSlot} />
+            slot='deception-bonus' />
           <SkillBonus
             ability='cha'
             skill='intimidation'
-            slot='intimidation-bonus'
-            onClick={showCardsForSlot} />
+            slot='intimidation-bonus' />
           <SkillBonus
             ability='cha'
             skill='performance'
-            slot='performance-bonus'
-            onClick={showCardsForSlot} />
+            slot='performance-bonus' />
           <SkillBonus
             ability='cha'
             skill='persuasion'
-            slot='persuasion-bonus'
-            onClick={showCardsForSlot} />
+            slot='persuasion-bonus' />
         </div>
       </div>
-      <ModalShop
-        open={slotToShow !== null}
-        onClose={() => setSlotToShow(null)}
-        filter={card => card.slot === slotToShow} />
     </div>
   )
 }

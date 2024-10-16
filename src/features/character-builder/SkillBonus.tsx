@@ -1,13 +1,12 @@
 import React from 'react'
-import { Tooltip } from '@mui/joy'
 
-import Card from './Card'
+import SlotButton from './SlotButton'
 
 import type { Ability, Save, Skill } from './character'
 import type { Slot } from './cards'
 import { formatModifier, modifier, translate } from './utils'
 import { useAppSelector } from '../../app/hooks'
-import { selectCharacter, selectSelectedCards } from './characterBuilderSlice'
+import { selectCharacter } from './characterBuilderSlice'
 
 import style from './CharacterBuilder.module.css'
 
@@ -15,33 +14,23 @@ interface SkillBonusProps {
   ability: Ability
   skill: Skill | Save
   slot: Slot
-  onClick?: (slot: Slot) => void
 }
 
-export default function SkillBonus({ ability, skill, slot, onClick }: SkillBonusProps) {
+export default function SkillBonus({ ability, skill, slot }: SkillBonusProps) {
   const character = useAppSelector(selectCharacter)
+
   const score = character[ability]
   const bonus = character[skill] * character.prof
 
-  const selectedCards = useAppSelector(selectSelectedCards)
-  const cardForSlot = selectedCards.find(card => card.slot === slot)
-
-  const mod = modifier(score) + bonus
-  const formattedMod = formatModifier(mod)
-
+  const formattedMod = formatModifier(modifier(score) + bonus)
   const formattedName = translate(skill)
 
   return (
-    <Tooltip
-      title={cardForSlot !== undefined && <Card id={cardForSlot.id} canSell />}
-      placement="right"
-      arrow
-      variant="outlined"
-    >
-      <div className={style.skillBonus} onClick={() => onClick && onClick(slot)}>
+    <SlotButton filter={card => card.slot === slot}>
+      <div className={style.skillBonus}>
         <span className={style.skill}>{formattedName}</span>
         <span className={style.bonus}>{formattedMod}</span>
       </div>
-    </Tooltip>
+    </SlotButton>
   )
 }
