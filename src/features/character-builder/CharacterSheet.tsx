@@ -9,9 +9,9 @@ import style from './CharacterBuilder.module.css'
 
 export default function CharacterSheet() {
   return (
-    <Sheet>
+    <Sheet sx={{marginRight: '2rem'}}>
       <CharacterStats />
-      <div className={style.statPanel}>
+      <div className={style.abilityGrid}>
         <HitPoints />
         <ArmorClass />
       </div>

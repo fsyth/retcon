@@ -5,8 +5,9 @@ import PointBudget from './PointBudget'
 import CardInventory from './CardInventory'
 import CardShop from './CardShop'
 
+import type { CardState } from './cards'
+
 import style from './CharacterBuilder.module.css'
-import { CardState } from './cards'
 
 interface ModalShopProps {
   open: boolean
@@ -19,7 +20,7 @@ export default function ModalShop({ open, onClose, filter, groupBy }: ModalShopP
   return (
     <Modal open={open} onClose={onClose}>
       <ModalDialog>
-        <div className={style.scrollable}>
+        <div className={style.modalShop}>
           <PointBudget />
           <CardInventory filter={filter} />
           <CardShop filter={filter} groupBy={groupBy} />

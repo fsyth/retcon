@@ -11,8 +11,10 @@ export default function AppHeader() {
     <header className={styles.appHeader}>
       <List orientation="horizontal">
         <h2>Retcon D&D</h2>
-        <PointBudget />
-        <CharacterLevel />
+        <div className={styles.headerControls}>
+          <PointBudget />
+          <CharacterLevel />
+        </div>
       </List>
     </header>
   )

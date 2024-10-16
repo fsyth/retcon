@@ -1,6 +1,5 @@
 body {
   background-color: #f0f4f8;
-  overflow-x: hidden;
 }
 
 .appHeader {
@@ -8,7 +7,7 @@ body {
   top: 0;
   left: 0;
   z-index: 100;
-  width: 100vw;
+  width: calc(100vw - 2rem);
   padding: 1rem;
   background-color: #e6eef499;
   backdrop-filter: blur(4px);
@@ -19,20 +18,36 @@ body {
   vertical-align: bottom;
 }
 
+.appHeader .headerControls {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  .appHeader h2 {
+    margin-right: 0.5rem;
+  }
+
+  .appHeader .headerControls {
+    flex-direction: column;
+  }
+}
+
 .pointBudget {
-  width: 9rem;
+  min-width: 9rem;
   margin: 0 0.5rem;
 }
 
 .characterLevel {
-  width: 12rem;
+  min-width: 12rem;
   margin: 0 0.5rem;
 }
 
 .characterBuilder {
+  width: 1fr;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 0;
   box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
   text-align: center;
 }
@@ -43,26 +58,32 @@ body {
 
 .abilityGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
-  text-align: center;
+  align-content: space-evenly;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  grid-template-rows: max-content;
+  gap: minmax(0, 1rem);
   margin: 1rem 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .abilityGrid {
+    grid-template-columns: repeat(3, minmax(7rem, 1fr));
+  }
 }
 
 .abilityGrid > div {
-  margin: 0 auto;
+  margin: 0.5rem auto;
+  width: 7rem;
 }
 
 .abilityGrid .abilityBox {
   margin: 0 0 0 auto;
 }
 
-.statPanel {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-  text-align: center;
-  margin: 1rem;
+.abilityGrid .skillBonus {
+  text-align: right;
+  overflow-x: visible;
 }
 
 .abilityBox {
@@ -142,7 +163,6 @@ body {
   position: absolute;
   top: -1px;
   right: -1px;
-  /* width: 2.5rem; */
   height: 2.5rem;
   border-radius: 6px;
 }
@@ -172,12 +192,24 @@ body {
 
 .cardGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(13rem, 1fr));
 }
 
-.scrollable {
-  width: 100%;
-  height: 100%;
+@media (max-width: 768px) {
+  .cardGrid { 
+    grid-template-columns: repeat(2, minmax(13rem, 1fr));
+  }
+}
+
+@media (max-width: 524px) {
+  .cardGrid { 
+    grid-template-columns: repeat(1, minmax(13rem, 1fr));
+  }
+}
+
+.modalShop {
+  width: 42rem;
+  max-width: 100%;
   overflow-y: scroll;
 }
 
