@@ -4,4 +4,4 @@ This a simple web app (React + Redux + Typescript) to make it easier to build ch
 
 In Retcon D&D, players start with a point budget granted by the DM and can spend points on new features and traits, as and when they're required. The DM also periodically rewards additional points for achieving goals and so on.
 
-[Try it here!](https://fsyth.github.io/retcon/)
+[Try it here!](https://fsyth.github.io/retcon/build/)
